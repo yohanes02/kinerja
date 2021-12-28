@@ -68,33 +68,55 @@
 				</div>
 			</div> -->
 			<div class="row">
-				<div class="col-xl-3 mb-30">
+				<div class="col-xl-4 mb-30">
 					<div class="card-box height-100-p widget-style1">
 						<div class="d-flex flex-wrap align-items-center">
 							<div class="progress-data">
-								<div id="chart"></div>
+								<!-- <div id="chart"></div> -->
+								<div style="height: 120px; display: grid; text-align: center; align-items: center;">
+									<i class="micon icon-copy dw dw-user1 fa-3x"></i>
+								</div>
 							</div>
 							<div class="widget-data">
-								<div class="h4 mb-0">2020</div>
-								<div class="weight-600 font-14">Contact</div>
+								<div class="h4 mb-0"><?=$sumEmployee?></div>
+								<div class="weight-600 font-14">Jumlah Karyawan Tetap</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-3 mb-30">
+				<div class="col-xl-4 mb-30">
 					<div class="card-box height-100-p widget-style1">
 						<div class="d-flex flex-wrap align-items-center">
 							<div class="progress-data">
-								<div id="chart2"></div>
+								<!-- <div id="chart2"></div> -->
+								<div style="height: 120px; display: grid; text-align: center; align-items: center;">
+									<i class="micon dw dw-diagram fa-3x" aria-hidden="true"></i>
+								</div>
 							</div>
 							<div class="widget-data">
-								<div class="h4 mb-0">400</div>
-								<div class="weight-600 font-14">Deals</div>
+								<div class="h4 mb-0"><?=$sumDepartment?></div>
+								<div class="weight-600 font-14">Jumlah Bagian</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-3 mb-30">
+				<div class="col-xl-4 mb-30">
+					<div class="card-box height-100-p widget-style1">
+						<div class="d-flex flex-wrap align-items-center">
+							<div class="progress-data">
+								<!-- <div id="chart2"></div> -->
+								<div style="height: 120px; display: grid; text-align: center; align-items: center;">
+									<i class="micon dw dw-diagram fa-3x" aria-hidden="true"></i>
+								</div>
+							</div>
+							<div class="widget-data">
+								<div class="h4 mb-0"><?=$sumDepartment?></div>
+								<div class="weight-600 font-14">Rata-rata penilaian</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="col-xl-3 mb-30">
 					<div class="card-box height-100-p widget-style1">
 						<div class="d-flex flex-wrap align-items-center">
 							<div class="progress-data">
@@ -119,7 +141,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 			<div class="row">
 				<div class="col-xl-8 mb-30">
@@ -130,8 +152,9 @@
 				</div>
 				<div class="col-xl-4 mb-30">
 					<div class="card-box height-100-p pd-20">
-						<h2 class="h4 mb-20">Lead Target</h2>
-						<div id="chart6"></div>
+						<h2 class="h4 mb-20">Persentase Gender</h2>
+						<!-- <div id="chart6"></div> -->
+						<div id="chart-gender"></div>
 					</div>
 				</div>
 			</div>

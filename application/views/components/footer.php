@@ -4,6 +4,10 @@
 	<script src="<?php echo base_url() ?>assets/vendors/scripts/process.js"></script>
 	<script src="<?php echo base_url() ?>assets/vendors/scripts/layout-settings.js"></script>
 	<script src="<?php echo base_url() ?>assets/src/plugins/apexcharts/apexcharts.min.js"></script>
+	<script src="<?php echo base_url() ?>assets/src/plugins/highcharts-6.0.7/code/highcharts.js"></script>
+	<script src="<?php echo base_url() ?>assets/https://code.highcharts.com/highcharts-3d.js"></script>
+	<script src="<?php echo base_url() ?>assets/src/plugins/highcharts-6.0.7/code/highcharts-more.js"></script>
+	<script src="<?php echo base_url() ?>assets/vendors/scripts/highchart-setting.js"></script>
 	<script src="<?php echo base_url() ?>assets/src/plugins/datatables/js/jquery.dataTables.min.js"></script>
 	<script src="<?php echo base_url() ?>assets/src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
 	<script src="<?php echo base_url() ?>assets/src/plugins/datatables/js/dataTables.responsive.min.js"></script>

@@ -16,4 +16,21 @@ class Kabag_m extends CI_Model
 		$this->db->where(["department_id" => $department_id, "version"=>$version]);
 		return $this->db->get('criteria');
 	}
+	
+	function getSubCriteriaData($criteria_id) {
+		$this->db->where(["criteria_id" => $criteria_id]);
+		return $this->db->get('sub_criteria');
+	}
+
+	function getEmployeeData($department_id) {
+		$this->db->where(["departemen_id" => $department_id]);
+		return $this->db->get('karyawan');
+	}
+
+	function getPenilaian($employee_id, $criterias_id, $month) {
+		$criterias_id = join(',',$criterias_id);
+		$sql = "SELECT r.*, c.weight, sc.weight from rating r left join criteria c on c.id = r.criteria_id left join sub_criteria sc on sc.id = r.sub_criteria_id where r.karyawan_id = $employee_id and r.criteria_id in ($criterias_id) and r.month = $month";
+		return $this->db->query($sql);
+	}
+
 }

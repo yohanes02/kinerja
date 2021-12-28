@@ -80,16 +80,25 @@
 									<input type="text" class="form-control" name="last_name">
 								</div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label for="">Birth Place</label>
 									<input type="text" class="form-control" name="birth_place">
 								</div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label for="">Birth Date</label>
 									<input type="text" class="form-control date-picker" name="birth_date">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="">Jenis Kelamin</label>
+									<select name="jenis_kelamin" id="" class="form-control custom-select">
+										<option value="1">Pria</option>
+										<option value="2">Wanita</option>
+									</select>
 								</div>
 							</div>
 							<div class="col-md-3">

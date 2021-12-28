@@ -63,20 +63,37 @@
 				</div>
 			</div>
 			<div>
-				<form action="<?= base_url() ?>hrd/insertKaryawan" method="post">
+				<form action="<?= base_url() ?><?php if($rating_data == []) echo 'kabag/insert_penilaian'; else echo 'kabag/update_penilaian' ?>" method="post">
 					<div class="row">
-						<?php for ($j=0; $j < 5; $j++) : ?>
+						<input type="hidden" name="karyawan_id" value="<?=$employee_id?>" >
+						<?php $no=0; foreach ($criteria_data as $criteria) : ?>
 							<div class="col-md-12">
 								<div class="form-group">
-									<label for="">Deskripsi Penilaian</label>
-									<select name="month_rating" id="month-rating" class="form-control custom-select">
-										<?php for ($i=1; $i <= 5; $i++) : ?>
-											<option value="<?= $i ?>">Nilai <?= $i ?></option>
-										<?php endfor; ?>
+									<?php if($rating_data != []) : ?>
+										<?php foreach ($rating_data as $rating) : ?>
+											<?php if($rating['criteria_id'] == $criteria['id']) :?>
+												<input type="hidden" name="rating_id<?=$no?>" value="<?=$rating['id']?>">
+											<?php endif; ?>
+										<?php endforeach; ?>
+									<?php endif; ?>
+									<label for=""><?= $criteria['name'] ?></label>
+									<input type="hidden" name="kriteria<?=$no?>" value="<?=$criteria['id']?>" >
+									<select name="rating<?=$no?>" id="rating<?=$no?>" class="form-control custom-select">
+										<?php foreach ($criteria['sub_criterias'] as $sub_criteria) : ?>
+											<?php if ($rating_data != []) : ?>
+												<?php foreach ($rating_data as $rating) : ?>
+													<?php if ($rating['criteria_id'] == $criteria['id']) : ?>
+														<option value="<?= $sub_criteria['id'] ?>" <?php if ($rating['sub_criteria_id'] == $sub_criteria['id']) echo 'selected'; ?>><?= $sub_criteria['name'] ?></option>
+													<?php endif; ?>
+												<?php endforeach; ?>
+											<?php else : ?>
+												<option value="<?= $sub_criteria['id'] ?>"><?=$sub_criteria['name']?></option>
+											<?php endif; ?>
+										<?php endforeach; ?>
 									</select>
 								</div>
 							</div>
-						<?php endfor; ?>
+						<?php $no++; endforeach; ?>
 						<div class="col-md-6 offset-6">
 							<div class="row">
 								<div class="col-md-6">

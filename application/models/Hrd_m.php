@@ -26,4 +26,9 @@ class Hrd_m extends CI_Model
 		$this->db->where(['id'=>$id]);
 		return $this->db->get('karyawan');
 	}
+
+	public function getEmployeeByGender() {
+		$sql = "SELECT jk, count(*) as jml FROM `karyawan` GROUP by jk";
+		return $this->db->query($sql);
+	}
 }

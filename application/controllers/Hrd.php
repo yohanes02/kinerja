@@ -12,10 +12,14 @@ class Hrd extends CI_Controller {
 	}
 
 	public function index() {
+		$data['sumEmployee'] = count($this->Core_m->getAll('karyawan')->result_array());
+		$data['sumDepartment'] = count($this->Core_m->getAll('departemen')->result_array());
+		$jsFile['jsFile'] = 'hrd';
+
 		$this->load->view('components/header');
 		$this->load->view('components/top_bar');
-		$this->load->view('hrd/v_index');
-		$this->load->view('components/footer');
+		$this->load->view('hrd/v_index', $data);
+		$this->load->view('components/footer', $jsFile);
 	}
 
 	public function karyawan() {
@@ -69,6 +73,7 @@ class Hrd extends CI_Controller {
 		$lastName = $post['last_name'];
 		$birthPlace = $post['birth_place'];
 		$birthDate = $post['birth_date'];
+		$jk = $post['jenis_kelamin'];
 		$fee = $post['fee'];
 		$joinDate = $post['join_date'];
 		$address = $post['address'];
@@ -82,6 +87,7 @@ class Hrd extends CI_Controller {
 			'last_name'	=> $lastName,
 			'birth_place'			=> $birthPlace,
 			'birth_date'			=> $birthDate,
+			'jk'			=> $jk,
 			'fee'			=> $fee,
 			'join_date'			=> $joinDate,
 			'address'			=> $address,
@@ -100,6 +106,7 @@ class Hrd extends CI_Controller {
 		$lastName = $post['last_name'];
 		$birthPlace = $post['birth_place'];
 		$birthDate = $post['birth_date'];
+		$jk = $post['jenis_kelamin'];
 		$fee = $post['fee'];
 		$joinDate = $post['join_date'];
 		$address = $post['address'];
@@ -113,6 +120,7 @@ class Hrd extends CI_Controller {
 			'last_name'	=> $lastName,
 			'birth_place'			=> $birthPlace,
 			'birth_date'			=> $birthDate,
+			'jk'			=> $jk,
 			'fee'			=> $fee,
 			'join_date'			=> $joinDate,
 			'address'			=> $address,
@@ -236,6 +244,10 @@ class Hrd extends CI_Controller {
 
 		$this->Core_m->deleteData($userId, 'departemen');
 		redirect('hrd/bagian');
+	}
+
+	public function getEmployeeByGender() {
+		echo json_encode($this->Hrd_m->getEmployeeByGender()->result());
 	}
 }
 ?>

@@ -63,7 +63,51 @@
 				</div>
 			</div>
 			<div>
-				<form action="<?= base_url() ?>hrd/insertKaryawan" method="post">
+				<?php if($sub_criteria_data == []) : ?>
+				<form action="<?= base_url() ?>kabag/insert_sub_criteria" method="post">
+					<div class="row">
+						<div class="col-md-12 row">
+							<div class="col-md-1">
+								<div class="form-group text-center">
+									<label for="">No</label>
+								</div>
+							</div>
+							<div class="col-md-8">
+								<div class="form-group">
+									<label for="">Nama Sub Kriteria</label>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="">Bobot Sub Kriteria</label>
+								</div>
+							</div>
+						</div>
+						<input type="hidden" name="kriteria_length" id="kriteria-length" style="display: none;" value="0">
+						<input type="hidden" name="criteria_parent" id="criteria-parent" style="display: none;" value="<?= $criteria_id ?>">
+						<div class="col-md-12 row" id="div-sub-kriteria-new"></div>
+						<div class="col-md-3 pb-20">
+							<button class="btn btn-block btn-success pull-right" type="button" id="add-new-sub-criteria">Tambah Sub Kriteria</button>
+						</div>
+						<div class="col-md-6 offset-6">
+							<div class="row">
+								<div class="col-md-6">
+									<a href="<?= base_url() ?>kabag/kriteria">
+										<button class="btn btn-block btn-secondary pull-right" type="button">Cancel</button>
+									</a>
+								</div>
+								<div class="col-md-6">
+									<button class="btn btn-block btn-success pull-right" type="button" id="button-new-sub">Simpan</button>
+									<button type="submit" id="submit-new-sub" style="display: none;"></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				<?php else: ?>
+				<form action="<?= base_url() ?>kabag/update_sub_criteria" method="post">
+					<input type="hidden" name="sub_kriteria_length_edit" id="sub-kriteria-length-edit" style="display: none;" value="<?= count($sub_criteria_data) ?>">
+					<input type="hidden" name="criteria_parent" id="criteria-parent" style="display: none;" value="<?= $criteria_id ?>">
 					<div class="row">
 						<div class="col-md-1">
 							<div class="form-group text-center">
@@ -80,26 +124,27 @@
 								<label for="">Bobot Sub Kriteria</label>
 							</div>
 						</div>
-						<?php $no=1; for ($i=0; $i < 4; $i++) : ?>
+						<?php $no=0; foreach($sub_criteria_data as $sub_criteria) : ?>
 							<div class="col-md-1">
 								<div class="form-group text-center">
-									<input type="text" class="form-control text-center" name="no" value="<?=$no?>" disabled>
+									<input type="hidden" name="sub_criteria_id<?=$no?>" value="<?=$sub_criteria['id']?>">
+									<input type="text" class="form-control text-center" name="no" value="<?=$no + 1?>" disabled>
 								</div>
 							</div>
 							<div class="col-md-8">
 								<div class="form-group">
-									<input type="text" class="form-control" name="sub_criteria_name" value="Kriteria 1">
+									<input type="text" class="form-control" name="sub_criteria_name<?=$no?>" value="<?= $sub_criteria['name'] ?>">
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<input type="number" class="form-control" name="sub_criteria_rating" value="30">
+									<input type="number" class="form-control" id="sub-criteria-rating<?=$no?>" name="sub_criteria_rating<?=$no?>" value="<?= $sub_criteria['weight'] ?>">
 								</div>
 							</div>
-						<?php $no++; endfor; ?>
-						<div class="col-md-3 pb-20">
+						<?php $no++; endforeach; ?>
+						<!-- <div class="col-md-3 pb-20">
 							<button class="btn btn-block btn-success pull-right" type="button" id="add-new-criteria">Tambah Sub Kriteria</button>
-						</div>
+						</div> -->
 						<div class="col-md-6 offset-6">
 							<div class="row">
 								<div class="col-md-6">
@@ -108,12 +153,14 @@
 									</a>
 								</div>
 								<div class="col-md-6">
-									<button class="btn btn-block btn-success pull-right" type="submit">Simpan</button>
+									<button class="btn btn-block btn-success pull-right" type="button" id="button-update-sub">Simpan</button>
+									<button type="submit" id="submit-update-sub" style="display: none;"><button>
 								</div>
 							</div>
 						</div>
 					</div>
 				</form>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>

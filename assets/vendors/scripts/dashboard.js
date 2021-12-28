@@ -309,14 +309,14 @@ var options5 = {
 		colors: ['transparent']
 	},
 	series: [{
-		name: 'In Progress',
+		name: 'Wanita',
 		data: [40, 28, 47, 22, 34, 25]
 	}, {
-		name: 'Complete',
+		name: 'Pria',
 		data: [30, 20, 37, 10, 28, 11]
 	}],
 	xaxis: {
-		categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+		categories: ['IT', 'Finance', 'Marketing', 'Apr', 'May', 'Jun'],
 		labels: {
 			style: {
 				colors: ['#353535'],

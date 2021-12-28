@@ -49,7 +49,7 @@
 
 <div class="main-container">
 	<div class="pd-ltr-20">
-		<div class="pd-20 card-box mb-30 collapse collapse-box" id="parent-add">
+		<!-- <div class="pd-20 card-box mb-30 collapse collapse-box" id="parent-add">
 			<div class="clearfix mb-20">
 				<div class="row">
 					<div class="col-md-9">
@@ -69,7 +69,7 @@
 							<div class="form-group">
 								<label for="">Nama Karyawan</label>
 								<select name="month_rating" id="month-rating" class="form-control custom-select">
-									<?php for ($i=1; $i <= 12; $i++) : ?>
+									<?php for ($i = 1; $i <= 12; $i++) : ?>
 										<option value="<?= $i ?>">Karyawan <?= $i ?></option>
 									<?php endfor; ?>
 								</select>
@@ -79,7 +79,7 @@
 							<div class="form-group">
 								<label for="">Bulan Penilaian</label>
 								<select name="month_rating" id="month-rating" class="form-control custom-select">
-									<?php for ($i=1; $i <= 12; $i++) : ?>
+									<?php for ($i = 1; $i <= 12; $i++) : ?>
 										<option value="<?= $i ?>"><?= $i ?></option>
 									<?php endfor; ?>
 								</select>
@@ -96,19 +96,20 @@
 					</div>
 				</form>
 			</div>
-		</div>
+		</div> -->
 		<div class="pd-20 card-box mb-30">
 			<div class="clearfix mb-20">
 				<!-- <div class="pull-left"> -->
 				<div class="row">
 					<div class="col-md-9">
 						<h4>Kriteria Penilaian</h4>
+						<p>Bulan: <?=date("F", mktime(0, 0, 0, date('m') - 1, 10));?></p>
 					</div>
-					<div class="col-md-3">
+					<!-- <div class="col-md-3">
 						<a href="#parent-add" rel="content-y" data-toggle="collapse">
 							<button type="button" class="btn btn-primary pull-right">Tambah Penilaian Baru</button>
 						</a>
-					</div>
+					</div> -->
 				</div>
 				<!-- <h4>Daftar User</h4> -->
 				<!-- </div> -->
@@ -119,12 +120,35 @@
 						<tr>
 							<th scope="col">No</th>
 							<th scope="col">Nama Karyawan</th>
-							<th scope="col">Status Penilaian</th>
+							<th scope="col">Hasil Penilaian</th>
 							<th scope="col" width="25%">Action</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+						<?php $no = 1;
+						foreach ($employee_data as $employee) : ?>
+							<tr>
+								<td><?= $no ?></td>
+								<td><?php echo $employee['first_name'] . ' ' . $employee['last_name'] ?></td>
+								<td></td>
+								<td>
+									<?php if ($employee['count_rating'] == $criteria_length) : ?>
+										<a href="<?= base_url() ?>kabag/penilaian_kinerja/<?=$employee['id']?>">
+											<button class="btn btn-primary">
+												<i class="icon-copy fa fa-edit" aria-hidden="true"></i> Edit Penilaian
+											</button>
+										</a>
+									<?php else : ?>
+										<a href="<?= base_url() ?>kabag/penilaian_kinerja/<?=$employee['id']?>">
+											<button class="btn btn-success">
+												<i class="icon-copy fa fa-edit" aria-hidden="true"></i> Beri Penilaian
+											</button>
+										</a>
+									<?php endif; ?>
+								</td>
+							</tr>
+						<?php $no++;endforeach; ?>
+						<!-- <tr>
 							<td scope="row">1</td>
 							<td scope="row">Yohanes</td>
 							<td scope="row">DONE</td>
@@ -147,7 +171,7 @@
 									</button>
 								</a>
 							</td>
-						</tr>
+						</tr> -->
 					</tbody>
 				</table>
 			</div>

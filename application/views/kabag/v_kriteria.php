@@ -84,7 +84,7 @@
 								</div>
 							</div>
 						</div>
-						<!-- <span id="kriteria-length" style="display: none;">3</span> -->
+						<span id="kriteria-length-edit" style="display: none;"><?= count($criteria_data) ?></span>
 						<div id="div-kriteria" class="col-md-12 row">
 							<?php $no = 0;
 							foreach ($criteria_data as $criteria) : ?>
@@ -97,12 +97,12 @@
 									</div>
 									<div class="col-md-8">
 										<div class="form-group">
-											<input type="text" class="form-control" name="criteria_name<?= $no ?>" value="<?= $criteria['name'] ?>" required>
+											<input type="text" class="form-control" name="criteria_name<?= $no ?>" value="<?= $criteria['name'] ?>" id="criteria_name<?= $no ?>" required>
 										</div>
 									</div>
 									<div class="col-md-3">
 										<div class="form-group">
-											<input type="number" class="form-control" name="criteria_rating<?= $no ?>" value="<?= $criteria['weight'] ?>" required>
+											<input type="number" class="form-control" name="criteria_rating<?= $no ?>" id="criteria_rating<?= $no ?>" value="<?= $criteria['weight'] ?>" required>
 										</div>
 									</div>
 								</div>
@@ -120,7 +120,8 @@
 									</a>
 								</div>
 								<div class="col-md-6">
-									<button class="btn btn-block btn-success pull-right" type="submit">Simpan</button>
+									<button class="btn btn-block btn-success pull-right" type="button" id="button-edit-kriteria">Simpan</button>
+									<button type="submit" id="submit-edit-kriteria" style="display: none;"></button>
 								</div>
 							</div>
 						</div>
@@ -178,7 +179,8 @@
 									</a>
 								</div>
 								<div class="col-md-6">
-									<button class="btn btn-block btn-success pull-right" type="submit">Simpan</button>
+									<button class="btn btn-block btn-success pull-right" type="button" id="button-new-kriteria">Simpan</button>
+									<button type="submit" id="submit-new-kriteria" style="display: none;"></button>
 								</div>
 							</div>
 						</div>

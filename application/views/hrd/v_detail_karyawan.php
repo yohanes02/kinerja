@@ -81,16 +81,25 @@
 									<input type="text" class="form-control" name="last_name" value="<?= $detail['last_name'] ?>">
 								</div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label for="">Birth Place</label>
 									<input type="text" class="form-control" name="birth_place" value="<?= $detail['birth_place'] ?>">
 								</div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label for="">Birth Date</label>
 									<input type="text" class="form-control date-picker" name="birth_date" value="<?= $detail['birth_date'] ?>">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="">Jenis Kelamin</label>
+									<select name="jenis_kelamin" id="" class="form-control custom-select">
+										<option value="1" <?php if($detail['jk']==1) echo 'selected' ?>>Pria</option>
+										<option value="2" <?php if($detail['jk']==2) echo 'selected' ?>>Wanita</option>
+									</select>
 								</div>
 							</div>
 							<div class="col-md-3">
