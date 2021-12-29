@@ -12,6 +12,11 @@ class Core_m extends CI_Model
     return $this->db->get($table);
 	}
 
+	public function getById($id, $table) {
+		$this->db->where(['id'=>$id]);
+		return $this->db->get($table);
+	}
+
 	public function insertData($ins, $table) {
 		$this->db->insert($table, $ins);
 		return $this->db->affected_rows();

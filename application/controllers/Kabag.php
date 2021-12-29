@@ -65,8 +65,6 @@ class Kabag extends CI_Controller
 			$employee_data[$i]['count_rating'] = count($rating);
 		}
 
-		$this->calculateVikor($rating);
-
 		$data['criteria_length'] = count($criterias);
 		$data['employee_data'] = $employee_data;
 		$this->load->view('components/header');
@@ -227,6 +225,12 @@ class Kabag extends CI_Controller
 		$criteria_used_row = $this->Kabag_m->getCriteriaUsed($this->session->userdata('department_id'))->row_array();
 		$criteria_used = $criteria_used_row['version'];
 		$criterias = $this->Kabag_m->getCriteriaData($this->session->userdata('department_id'), $criteria_used)->result_array();
+
+		$criterias_id = array();
+		foreach ($criterias as $criteria) {
+			array_push($criterias_id, $criteria['id']);
+		}
+
 		$month = date('m') - 1;
 		for ($i=0; $i < count($criterias); $i++) { 
 			$criteriaValue = $post['kriteria'.$i];
@@ -240,6 +244,13 @@ class Kabag extends CI_Controller
 			];
 			$this->Core_m->insertData($data, 'rating');
 		}
+
+		$rating = $this->Kabag_m->getPenilaian($post['karyawan_id'], $criterias_id, $month)->result_array();
+		// die;
+
+		$this->vikorCalculation($rating);
+		die;
+
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
@@ -249,7 +260,14 @@ class Kabag extends CI_Controller
 		$criteria_used_row = $this->Kabag_m->getCriteriaUsed($this->session->userdata('department_id'))->row_array();
 		$criteria_used = $criteria_used_row['version'];
 		$criterias = $this->Kabag_m->getCriteriaData($this->session->userdata('department_id'), $criteria_used)->result_array();
+
+		$criterias_id = array();
+		foreach ($criterias as $criteria) {
+			array_push($criterias_id, $criteria['id']);
+		}
+
 		$month = date('m') - 1;
+		$id = null;
 		for ($i=0; $i < count($criterias); $i++) { 
 			$criteriaValue = $post['kriteria'.$i];
 			$ratingValue = $post['rating'.$i];
@@ -260,10 +278,53 @@ class Kabag extends CI_Controller
 			];
 			$this->Core_m->updateData($id, $data, 'rating');
 		}
+
+		$employee_id = $this->Core_m->getById($id, 'rating')->row_array();
+		$employee_id = $employee_id['karyawan_id'];
+
+		$rating = $this->Kabag_m->getPenilaian($employee_id, $criterias_id, $month)->result_array();
+
+		$this->vikorCalculation($rating);
+		die;
+
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
-	private function calculateVikor($data)
+	private function vikorCalculation($data)
 	{
+		// print_r($data);
+		$arrCWeight = array();
+		$arrSCWeight = array();
+		$arrMinMaxSC = array();
+		
+		foreach ($data as $dt) {
+			array_push($arrCWeight, $dt['cweight']);
+			array_push($arrSCWeight, $dt['weight']);
+			$criteria_id = $dt['criteria_id'];
+
+			$minMaxSC = $this->Kabag_m->maxminSubBobot($criteria_id)->row_array();
+			$maxSCWeight = $minMaxSC['max']; 
+			$minSCWeight = $minMaxSC['min']; 
+			$arr = array($maxSCWeight, $minSCWeight);
+			array_push($arrMinMaxSC, $arr);
+		}
+
+		$nilai1 = array();
+		for ($i=0; $i < count($arrSCWeight); $i++) { 
+			echo $arrMinMaxSC[$i][0] . ', ' . $arrSCWeight[$i] . ', ' . $arrMinMaxSC[$i][1];
+			echo "<br/>";
+			$nilai = ($arrMinMaxSC[$i][0] - $arrSCWeight[$i])/($maxSCWeight - $arrMinMaxSC[$i][1]);
+			array_push($nilai1, $nilai);
+		}
+
+		print_r($nilai1);
+		echo "<br/>";
+		$nilai2 = array();
+		for ($i=0; $i < count($nilai1); $i++) { 
+			$nln = $nilai1[$i] * $arrCWeight[$i];
+			array_push($nilai2, $nln);
+		}
+		print_r($nilai2);
+
 	}
 }
