@@ -63,10 +63,10 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="">Nama Karyawan</label>
-								<select name="month_rating" id="month-rating" class="form-control custom-select">
-									<option value="0">Semua Karyawan</option>
-									<?php for ($i=1; $i <= 12; $i++) : ?>
-										<option value="<?= $i ?>">Karyawan <?= $i ?></option>
+								<select name="employee_id" id="employee-id" class="form-control custom-select">
+									<option value="all">Semua Karyawan</option>
+									<?php for ($i=0; $i < count($employee_data); $i++) : ?>
+										<option value="<?= $employee_data[$i]['id'] ?>"><?= $employee_data[$i]['first_name'] ?> <?= $employee_data[$i]['last_name'] ?></option>
 									<?php endfor; ?>
 								</select>
 							</div>
@@ -74,63 +74,85 @@
 						<div class="col-md-2">
 							<div class="form-group">
 								<label for="">Dari Bulan</label>
-								<select name="month_rating" id="month-rating" class="form-control custom-select">
-									<?php for ($i=1; $i <= 12; $i++) : ?>
+								<input class="form-control month-picker" placeholder="Select Month" type="text" id="month-rating-start">
+								<!-- <select name="month_rating_start" id="month-rating-start" class="form-control custom-select">
+									<?php //for ($i=1; $i <= 12; $i++) : ?>
 										<option value="<?= $i ?>"><?= $i ?></option>
-									<?php endfor; ?>
-								</select>
+									<?php //endfor; ?>
+								</select> -->
 							</div>
 						</div>
 						<div class="col-md-2">
 							<div class="form-group">
 								<label for="">Ke Bulan</label>
-								<select name="month_rating" id="month-rating" class="form-control custom-select">
-									<?php for ($i=1; $i <= 12; $i++) : ?>
+								<input class="form-control month-picker" placeholder="Select Month" type="text" id="month-rating-end">
+								<!-- <select name="month_rating_end" id="month-rating-end" class="form-control custom-select">
+									<?php //for ($i=1; $i <= 12; $i++) : ?>
 										<option value="<?= $i ?>"><?= $i ?></option>
-									<?php endfor; ?>
-								</select>
+									<?php //endfor; ?>
+								</select> -->
 							</div>
 						</div>
 						<div class="col-md-2">
 							<div class="form-group">
 								<label for="">Aksi</label>
-								<a href="<?= base_url() ?>kabag/penilaian_kinerja">
-									<button class="btn btn-block btn-success">Tampilkan</button>
+								<a href="#">
+									<button class="btn btn-block btn-success" id="get-riwayat" type="button">Tampilkan</button>
 								</a>
 							</div>
 						</div>
 					</div>
 				</form>
-			</div>
-		</div>
-		<div class="pd-20 card-box mb-30">
-			<div class="clearfix mb-20">
-				<div class="row">
-					<div class="col-md-9">
-						<h4>Penilaian nama_bulan</h4>
+				<div class="card">
+					<div class="card-header" style="padding: 0.3rem;">
+						<button class="btn btn-block" data-toggle="collapse" data-target="#info" style="text-align: left; font-weight: bolder;">
+							Info Kriteria Penilaian
+						</button>
+					</div>
+					<div id="info" class="collapse">
+						<div class="card-body">
+							<h4>Kriteria Penilaian</h4>
+							<?php $i=1; foreach ($criteria_data as $criteria) : ?>
+								<div>
+									<span style="font-weight: bolder;">K<?=$i;?> : </span> <?=$criteria['name']?>
+								</div>
+							<?php $i++; endforeach; ?>
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="table-responsive">
-				<table class="table table-stripped">
-					<thead>
-						<tr>
-							<th>Nama Karyawan</th>
-							<th>K1</th>
-							<th>K2</th>
-							<th>Hasil</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Yohanes .</td>
-							<td>75</td>
-							<td>100</td>
-							<td>0,23333</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+		</div>
+		<div id="parent-riwayat">
+		<!-- <div class="pd-20 card-box mb-30" id="parent-riwayat"> -->
+			<!-- <div>
+				<div class="clearfix mb-20">
+					<div class="row">
+						<div class="col-md-9">
+							<h4>Penilaian nama_bulan</h4>
+						</div>
+					</div>
+				</div>
+				<div class="table-responsive">
+					<table class="table table-stripped">
+						<thead>
+							<tr>
+								<th>Nama Karyawan</th>
+								<th>K1</th>
+								<th>K2</th>
+								<th>Hasil</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Yohanes .</td>
+								<td>75</td>
+								<td>100</td>
+								<td>0,23333</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div> -->
 		</div>
 	</div>
 </div>

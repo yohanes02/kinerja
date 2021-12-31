@@ -249,5 +249,34 @@ class Hrd extends CI_Controller {
 	public function getEmployeeByGender() {
 		echo json_encode($this->Hrd_m->getEmployeeByGender()->result());
 	}
+
+	public function getEmployeeByGenderByDepartment() {
+		$arr = array();
+		$departments = $this->Core_m->getAll('departemen')->result_array();
+		foreach ($departments as $department) {
+			$a = array();
+			$a['dept_name'] = $department['name'];
+
+			$datas = $this->Hrd_m->getEmployeeByGenderByDepartment($department['id'])->result_array();
+			// print_r($datas); echo "<br><br>";
+			if(empty($datas) == false) {
+				foreach ($datas as $data) {
+					// echo $data['name'];print_r($data);echo "<br><br>";
+					if($data['jk'] == 1) {
+						$pria = $data['jml'];
+					} else {
+						$wanita = $data['jml'];
+					}
+				}
+			} else {
+				$pria = 0;
+				$wanita = 0;
+			}
+			$a['gender'] = [$pria, $wanita];
+			array_push($arr, $a);
+		}
+		echo json_encode($arr);
+		// die;
+	}
 }
 ?>

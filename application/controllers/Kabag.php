@@ -61,7 +61,8 @@ class Kabag extends CI_Controller
 
 		for ($i = 0; $i < count($employee_data); $i++) {
 			$month = date('m') - 1;
-			$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month)->result_array();
+			$year = date('Y');
+			$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month, $year)->result_array();
 			$employee_data[$i]['count_rating'] = count($rating);
 
 			$where = [
@@ -71,7 +72,11 @@ class Kabag extends CI_Controller
 			];
 	
 			$dataResult = $this->Kabag_m->getResult($where)->row_array();
-			$employee_data[$i]['result'] = $dataResult['result'];
+			if ($dataResult != null) {
+				$employee_data[$i]['result'] = $dataResult['result'];
+			} else {
+				$employee_data[$i]['result'] = '-';
+			}
 		}
 
 
@@ -97,7 +102,8 @@ class Kabag extends CI_Controller
 			$criterias[$i]['sub_criterias'] = $sub_criterias;
 		}
 		$month = date('m') - 1;
-		$rating = $this->Kabag_m->getPenilaian($employee_id, $criterias_id, $month)->result_array();
+		$year = date('Y');
+		$rating = $this->Kabag_m->getPenilaian($employee_id, $criterias_id, $month, $year)->result_array();
 
 		$data['criteria_data'] = $criterias;
 		$data['rating_data'] = $rating;
@@ -110,16 +116,30 @@ class Kabag extends CI_Controller
 	}
 
 	public function riwayat()
-	{		
+	{
+		$criteria_used_row = $this->Kabag_m->getCriteriaUsed($this->session->userdata('department_id'))->row_array();
+		$criteria_used = $criteria_used_row['version'];
+		$criterias = $this->Kabag_m->getCriteriaData($this->session->userdata('department_id'), $criteria_used)->result_array();
+		$employee_data = $this->Kabag_m->getEmployeeData($this->session->userdata('department_id'))->result_array();
+		$data['employee_data'] = $employee_data;
+		$data['criteria_data'] = $criterias;
+
+		$jsFile['jsFile'] = 'kabag';
 		$this->load->view('components/header');
 		$this->load->view('components/top_bar');
-		$this->load->view('kabag/v_riwayat');
-		$this->load->view('components/footer');
+		$this->load->view('kabag/v_riwayat', $data);
+		$this->load->view('components/footer', $jsFile);
 	}
 
 	public function getRiwayat() {
+		// die;
+		$jsonData = json_decode(file_get_contents('php://input'),true);
+		// print_r($jsonData); echo "<br/><br/>";die;
+		// print_r(json_decode($_POST, TRUE));
 		$resArr = array();
-		$months = [10,11];
+		$months = $jsonData['months'];
+		$years = $jsonData['years'];
+		$employee = $jsonData['employee'];
 		$criteria_used_row = $this->Kabag_m->getCriteriaUsed($this->session->userdata('department_id'))->row_array();
 		$criteria_used = $criteria_used_row['version'];
 		$criterias = $this->Kabag_m->getCriteriaData($this->session->userdata('department_id'), $criteria_used)->result_array();
@@ -132,11 +152,16 @@ class Kabag extends CI_Controller
 			$criterias[$i]['sub_criterias'] = $sub_criterias;
 		}
 
-		$employee_data = $this->Kabag_m->getEmployeeData($this->session->userdata('department_id'))->result_array();
+		if($employee == 'all') {
+			$employee_data = $this->Kabag_m->getEmployeeData($this->session->userdata('department_id'))->result_array();
+		} else {
+			$employee_data = $this->Core_m->getById($employee,'karyawan')->result_array();
+		}
+		// print_r($employee_data);die;
 
 		for ($h=0; $h < count($months); $h++) { 
-			// $a['month'] = $months[$h];
 			$arr = array();
+			// $arr['month'] = $months[$h];
 			for ($i = 0; $i < count($employee_data); $i++) {
 				$a = array();
 				$a['k_id'] = $employee_data[$i]['id'];
@@ -144,7 +169,8 @@ class Kabag extends CI_Controller
 				['last_name'];
 				// $month = date('m') - 1;
 				$month = $months[$h];
-				$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month)->result_array();
+				$year = $years[$h];
+				$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month, $year)->result_array();
 				$aa = array();
 				for ($j=0; $j < count($rating); $j++) { 
 					$b = array($rating[$j]['criteria_id'], $rating[$j]['name'], $rating[$i]['weight']);
@@ -155,13 +181,16 @@ class Kabag extends CI_Controller
 				$where = [
 					"karyawan_id" => $employee_data[$i]['id'],
 					"month" => $month,
+					"year" => $year,
 					"version" => $criteria_used
 				];
 		
-				$resp= $this->Kabag_m->getResult($where)->row_array();		
-				$result = $resp['result'];
-				$a['result'] = $result;
-				if($result != null) {
+				$resp= $this->Kabag_m->getResult($where)->row_array();
+				if($resp != null) {
+					$result = $resp['result'];
+					$a['result'] = $result;
+				}
+				if($resp != null) {
 					// $a = array();
 					array_push($arr, $a);
 				}
@@ -177,12 +206,14 @@ class Kabag extends CI_Controller
 
 			array_push($resArr, $arr);
 
-			print_r($arr);
-			echo "<br/>";
-			echo "<br/>";
+			// print_r($arr);
+			// echo "<br/>";
+			// echo "<br/>";
 		}
 
-		print_r($resArr);
+		// print_r($resArr);
+
+		echo json_encode($resArr);
 	}
 
 	public function insert_criteria()
@@ -310,6 +341,7 @@ class Kabag extends CI_Controller
 		}
 
 		$month = date('m') - 1;
+		$year = date('Y');
 		for ($i=0; $i < count($criterias); $i++) { 
 			$criteriaValue = $post['kriteria'.$i];
 			$ratingValue = $post['rating'.$i];
@@ -323,7 +355,7 @@ class Kabag extends CI_Controller
 			$this->Core_m->insertData($data, 'rating');
 		}
 
-		$rating = $this->Kabag_m->getPenilaian($post['karyawan_id'], $criterias_id, $month)->result_array();
+		$rating = $this->Kabag_m->getPenilaian($post['karyawan_id'], $criterias_id, $month, $year)->result_array();
 		// die;
 
 		$result = $this->vikorCalculation($rating);
@@ -353,6 +385,7 @@ class Kabag extends CI_Controller
 		}
 
 		$month = date('m') - 1;
+		$year = date('Y');
 		$id = null;
 		for ($i=0; $i < count($criterias); $i++) { 
 			$criteriaValue = $post['kriteria'.$i];
@@ -368,7 +401,7 @@ class Kabag extends CI_Controller
 		$employee_id = $this->Core_m->getById($id, 'rating')->row_array();
 		$employee_id = $employee_id['karyawan_id'];
 
-		$rating = $this->Kabag_m->getPenilaian($employee_id, $criterias_id, $month)->result_array();
+		$rating = $this->Kabag_m->getPenilaian($employee_id, $criterias_id, $month, $year)->result_array();
 
 		$result = $this->vikorCalculation($rating);
 
