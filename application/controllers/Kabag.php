@@ -63,7 +63,17 @@ class Kabag extends CI_Controller
 			$month = date('m') - 1;
 			$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month)->result_array();
 			$employee_data[$i]['count_rating'] = count($rating);
+
+			$where = [
+				"karyawan_id" => $employee_data[$i]['id'],
+				"month" => $month,
+				"version" => $criteria_used
+			];
+	
+			$dataResult = $this->Kabag_m->getResult($where)->row_array();
+			$employee_data[$i]['result'] = $dataResult['result'];
 		}
+
 
 		$data['criteria_length'] = count($criterias);
 		$data['employee_data'] = $employee_data;
@@ -100,11 +110,79 @@ class Kabag extends CI_Controller
 	}
 
 	public function riwayat()
-	{
+	{		
 		$this->load->view('components/header');
 		$this->load->view('components/top_bar');
 		$this->load->view('kabag/v_riwayat');
 		$this->load->view('components/footer');
+	}
+
+	public function getRiwayat() {
+		$resArr = array();
+		$months = [10,11];
+		$criteria_used_row = $this->Kabag_m->getCriteriaUsed($this->session->userdata('department_id'))->row_array();
+		$criteria_used = $criteria_used_row['version'];
+		$criterias = $this->Kabag_m->getCriteriaData($this->session->userdata('department_id'), $criteria_used)->result_array();
+		$criterias_id = array();
+		foreach ($criterias as $criteria) {
+			array_push($criterias_id, $criteria['id']);
+		}
+		for ($i = 0; $i < count($criterias); $i++) {
+			$sub_criterias = $this->Kabag_m->getSubCriteriaData($criterias[$i]['id'])->result_array();
+			$criterias[$i]['sub_criterias'] = $sub_criterias;
+		}
+
+		$employee_data = $this->Kabag_m->getEmployeeData($this->session->userdata('department_id'))->result_array();
+
+		for ($h=0; $h < count($months); $h++) { 
+			// $a['month'] = $months[$h];
+			$arr = array();
+			for ($i = 0; $i < count($employee_data); $i++) {
+				$a = array();
+				$a['k_id'] = $employee_data[$i]['id'];
+				$a['k_name'] = $employee_data[$i]['first_name'].' '.$employee_data[$i]
+				['last_name'];
+				// $month = date('m') - 1;
+				$month = $months[$h];
+				$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month)->result_array();
+				$aa = array();
+				for ($j=0; $j < count($rating); $j++) { 
+					$b = array($rating[$j]['criteria_id'], $rating[$j]['name'], $rating[$i]['weight']);
+					array_push($aa, $b);
+				}
+				$a['cr'] = $aa;
+	
+				$where = [
+					"karyawan_id" => $employee_data[$i]['id'],
+					"month" => $month,
+					"version" => $criteria_used
+				];
+		
+				$resp= $this->Kabag_m->getResult($where)->row_array();		
+				$result = $resp['result'];
+				$a['result'] = $result;
+				if($result != null) {
+					// $a = array();
+					array_push($arr, $a);
+				}
+	
+			}
+
+			usort($arr, function ($item1, $item2) {
+				if ($item1['result'] == $item2['result']) return 0;
+				return $item1['result'] < $item2['result'] ? -1 : 1;
+			});
+
+			// var_dump($arr['result']);echo "<br/><br/>";
+
+			array_push($resArr, $arr);
+
+			print_r($arr);
+			echo "<br/>";
+			echo "<br/>";
+		}
+
+		print_r($resArr);
 	}
 
 	public function insert_criteria()
@@ -248,8 +326,16 @@ class Kabag extends CI_Controller
 		$rating = $this->Kabag_m->getPenilaian($post['karyawan_id'], $criterias_id, $month)->result_array();
 		// die;
 
-		$this->vikorCalculation($rating);
-		die;
+		$result = $this->vikorCalculation($rating);
+
+		$ins = [
+			"karyawan_id" => $post['karyawan_id'],
+			"version" => $criteria_used,
+			"month" => $month,
+			"result" => $result
+		];
+
+		$this->Core_m->insertData($ins, 'result_penilaian');
 
 		redirect($_SERVER['HTTP_REFERER']);
 	}
@@ -284,8 +370,22 @@ class Kabag extends CI_Controller
 
 		$rating = $this->Kabag_m->getPenilaian($employee_id, $criterias_id, $month)->result_array();
 
-		$this->vikorCalculation($rating);
-		die;
+		$result = $this->vikorCalculation($rating);
+
+		$where = [
+			"karyawan_id" => $employee_id,
+			"month" => $month,
+			"version" => $criteria_used
+		];
+
+		$id_result_penilaian = $this->Kabag_m->getResult($where)->row_array();
+		$id_result_penilaian = $id_result_penilaian['id'];
+
+		$data = [
+			"result" => $result
+		];
+
+		$this->Core_m->updateData($id_result_penilaian, $data, 'result_penilaian');
 
 		redirect($_SERVER['HTTP_REFERER']);
 	}
@@ -309,22 +409,38 @@ class Kabag extends CI_Controller
 			array_push($arrMinMaxSC, $arr);
 		}
 
+		print_r($arrCWeight);echo "<br/>";
+
 		$nilai1 = array();
-		for ($i=0; $i < count($arrSCWeight); $i++) { 
+		for ($i=0; $i < count($arrSCWeight); $i++) {
 			echo $arrMinMaxSC[$i][0] . ', ' . $arrSCWeight[$i] . ', ' . $arrMinMaxSC[$i][1];
 			echo "<br/>";
-			$nilai = ($arrMinMaxSC[$i][0] - $arrSCWeight[$i])/($maxSCWeight - $arrMinMaxSC[$i][1]);
+			$nilai = ($arrMinMaxSC[$i][0] - $arrSCWeight[$i])/($arrMinMaxSC[$i][0] - $arrMinMaxSC[$i][1]);
+			// $nilai = (100 - $arrSCWeight[$i])/(100 - 0);
 			array_push($nilai1, $nilai);
 		}
 
-		print_r($nilai1);
-		echo "<br/>";
+		print_r($arrSCWeight);echo "<br/>";
+
+		print_r($nilai1);echo "<br/>";
+
 		$nilai2 = array();
 		for ($i=0; $i < count($nilai1); $i++) { 
 			$nln = $nilai1[$i] * $arrCWeight[$i];
 			array_push($nilai2, $nln);
 		}
-		print_r($nilai2);
 
+		print_r($nilai2);echo "<br/>";
+
+		$nilaiS = array_sum($nilai2);
+		$nilaiR = max($nilai2);
+
+		echo $nilaiS . ',' . $nilaiR;echo "<br/>";
+
+		$result = (0.5*(($nilaiS-0)/(100-0))) + ((1-0.5)*(($nilaiR-0)/(100-0)));
+
+		echo $result;echo "<br/>";
+
+		return $result;
 	}
 }

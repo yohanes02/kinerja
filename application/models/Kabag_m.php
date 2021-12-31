@@ -29,13 +29,24 @@ class Kabag_m extends CI_Model
 
 	function getPenilaian($employee_id, $criterias_id, $month) {
 		$criterias_id = join(',',$criterias_id);
-		$sql = "SELECT r.*, c.weight, sc.weight, c.weight as cweight from rating r left join criteria c on c.id = r.criteria_id left join sub_criteria sc on sc.id = r.sub_criteria_id where r.karyawan_id = $employee_id and r.criteria_id in ($criterias_id) and r.month = $month";
+		$sql = "SELECT r.*, c.weight, sc.weight, sc.name, c.weight as cweight from rating r left join criteria c on c.id = r.criteria_id left join sub_criteria sc on sc.id = r.sub_criteria_id where r.karyawan_id = $employee_id and r.criteria_id in ($criterias_id) and r.month = $month";
+		return $this->db->query($sql);
+	}
+
+	function getPenilaian2($employee_id, $criterias_id, $month) {
+		$criterias_id = join(',',$criterias_id);
+		$sql = "SELECT sc.weight as scWeight, sc.name from rating r left join criteria c on c.id = r.criteria_id left join sub_criteria sc on sc.id = r.sub_criteria_id where r.karyawan_id = $employee_id and r.criteria_id in ($criterias_id) and r.month = $month";
 		return $this->db->query($sql);
 	}
 
 	function maxminSubBobot($criteria_id) {
 		$sql = "select max(weight) as max, min(weight) as min from sub_criteria where criteria_id = $criteria_id";
 		return $this->db->query($sql);
+	}
+
+	function getResult($where) {
+		$this->db->where($where);
+		return $this->db->get('result_penilaian');
 	}
 
 }

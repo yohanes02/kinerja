@@ -103,5 +103,34 @@
 				</form>
 			</div>
 		</div>
+		<div class="pd-20 card-box mb-30">
+			<div class="clearfix mb-20">
+				<div class="row">
+					<div class="col-md-9">
+						<h4>Penilaian nama_bulan</h4>
+					</div>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<table class="table table-stripped">
+					<thead>
+						<tr>
+							<th>Nama Karyawan</th>
+							<th>K1</th>
+							<th>K2</th>
+							<th>Hasil</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Yohanes .</td>
+							<td>75</td>
+							<td>100</td>
+							<td>0,23333</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 </div>

@@ -130,7 +130,11 @@
 							<tr>
 								<td><?= $no ?></td>
 								<td><?php echo $employee['first_name'] . ' ' . $employee['last_name'] ?></td>
-								<td></td>
+								<td>
+									<?php if($employee['result'] != null) : ?>
+										<?= $employee['result'] ?>
+									<?php endif; ?>
+								</td>
 								<td>
 									<?php if ($employee['count_rating'] == $criteria_length) : ?>
 										<a href="<?= base_url() ?>kabag/penilaian_kinerja/<?=$employee['id']?>">
