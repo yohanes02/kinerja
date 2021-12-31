@@ -3,12 +3,13 @@ var obj = {
 		this.generateChart();
 	},
 	generateChart: function generateChart() {
-		this.chartGender();
+		this.chartGenderPie();
+		this.chartGenderBarByBagian()
 	},
-	chartGender: function chartGender() {
+	chartGenderPie: function chartGender() {
 		$.ajax({
 			type: "ajax",
-			url: "hrd/getEmployeeByGender",
+			url: "/kinerja/hrd/getEmployeeByGender",
 			dataType: "JSON",
 			success: function (data) {
 				var dataSeries = [];
@@ -71,6 +72,125 @@ var obj = {
 			},
 		});
 	},
+	chartGenderBarByBagian: function chartGenderBarByBagian() {
+		$.ajax({
+			type: "ajax",
+			url: "/kinerja/hrd/getEmployeeByGenderByDepartment",
+			dataType: "JSON",
+			success: function (data) {
+				var wanita = [];
+				var pria = [];
+				var department = []
+				data.forEach((e) => {
+					console.log(e.gender);
+					pria.push(parseInt(e.gender[0]));
+					wanita.push(parseInt(e.gender[1]));
+					department.push(e.dept_name);
+				});
+
+				console.log(wanita, pria);
+				var options = {
+					chart: {
+						height: 350,
+						type: 'bar',
+						parentHeightOffset: 0,
+						fontFamily: 'Poppins, sans-serif',
+						toolbar: {
+							show: false,
+						},
+					},
+					colors: ['#1b00ff', '#f56767'],
+					grid: {
+						borderColor: '#c7d2dd',
+						strokeDashArray: 5,
+					},
+					plotOptions: {
+						bar: {
+							horizontal: false,
+							columnWidth: '25%',
+							endingShape: 'rounded'
+						},
+					},
+					dataLabels: {
+						enabled: false
+					},
+					stroke: {
+						show: true,
+						width: 2,
+						colors: ['transparent']
+					},
+					series: [{
+						name: 'Wanita',
+						data: wanita
+					}, {
+						name: 'Pria',
+						data: pria
+					}],
+					xaxis: {
+						categories: department,
+						labels: {
+							style: {
+								colors: ['#353535'],
+								fontSize: '16px',
+							},
+						},
+						axisBorder: {
+							color: '#8fa6bc',
+						}
+					},
+					yaxis: {
+						title: {
+							text: ''
+						},
+						labels: {
+							style: {
+								colors: '#353535',
+								fontSize: '16px',
+							},
+						},
+						axisBorder: {
+							color: '#f00',
+						}
+					},
+					legend: {
+						horizontalAlign: 'right',
+						position: 'top',
+						fontSize: '16px',
+						offsetY: 0,
+						labels: {
+							colors: '#353535',
+						},
+						markers: {
+							width: 10,
+							height: 10,
+							radius: 15,
+						},
+						itemMargin: {
+							vertical: 0
+						},
+					},
+					fill: {
+						opacity: 1
+				
+					},
+					tooltip: {
+						style: {
+							fontSize: '15px',
+							fontFamily: 'Poppins, sans-serif',
+						},
+						y: {
+							formatter: function (val) {
+								return val
+							}
+						}
+					}
+				};
+
+				var chart = new ApexCharts(document.querySelector("#chart-gender-department"), options);
+				chart.render();
+			}
+		})
+	}
 };
 
 $("document").ready(function () {
