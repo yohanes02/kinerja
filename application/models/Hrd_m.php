@@ -36,4 +36,9 @@ class Hrd_m extends CI_Model
 		$sql = "SELECT d.name, k.jk, count(*) as jml FROM `karyawan` k left join departemen d on d.id = k.departemen_id where departemen_id = $department_id GROUP by jk";
 		return $this->db->query($sql);
 	}
+
+	public function getEmployeeByDept($dept_id) {
+		$this->db->where(['departemen_id'=>$dept_id]);
+		return $this->db->get('karyawan');
+	}
 }

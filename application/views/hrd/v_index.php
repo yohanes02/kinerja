@@ -148,9 +148,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="card-box mb-30">
-				<!-- <h2 class="h4 pd-20">Best Selling Products</h2> -->
-				<h2 class="h4 pd-20">Top 5 Karyawan</h2>
+			<!-- <div class="card-box mb-30">
+				<h2 class="h4 pd-20">Best Selling Products</h2>
 				<table class="data-table table nowrap">
 					<thead>
 						<tr>
@@ -291,7 +290,7 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>
+			</div> -->
 			<div class="footer-wrap pd-20 mb-20 card-box">
 				DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
 			</div>

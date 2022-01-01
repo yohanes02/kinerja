@@ -12,6 +12,7 @@ class Direk extends CI_Controller {
 
 	public function index() {
 		$this->load->view('components/header');
+		$this->load->view('components/top_bar');
 		$this->load->view('direktur/v_index');
 		$this->load->view('components/footer');
 	}

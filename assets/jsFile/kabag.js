@@ -1,5 +1,6 @@
 var obj = {
 	init: function init() {
+		this.generateChart();
 		this.addListener();
 	},
 	addListener: function addListener() {
@@ -350,7 +351,76 @@ var obj = {
 				}
 			});
 		});
-	}	
+	},
+	generateChart: function generateChart() {
+		this.chartGenderPie();
+	},
+	chartGenderPie: function chartGenderPie() {
+		$.ajax({
+			type: "ajax",
+			url: "kabag/getEmployeeByGender",
+			dataType: "JSON",
+			success: function (data) {
+				var dataSeries = [];
+				var total = 0;
+				data.forEach((e) => {
+					total += parseInt(e.jml);
+				});
+
+				data.forEach((e) => {
+					var percentage = parseFloat((e.jml / (total / 100)).toFixed(1));
+					if (e.jk == "1") {
+						dataSeries.push({
+							name: "Pria",
+							y: percentage,
+							color: "#4CAF50",
+						});
+					} else {
+						dataSeries.push({
+							name: "Wanita",
+							y: percentage,
+							color: "#FF5252",
+						});
+					}
+				});
+				Highcharts.chart("chart-gender", {
+					chart: {
+						type: "pie",
+					},
+					title: {
+						text: "",
+					},
+					tooltip: {
+						headerFormat: "",
+						pointFormat: "<b>{point.name}</b><br/>",
+					},
+					plotOptions: {
+						pie: {
+							allowPointSelect: true,
+							cursor: "pointer",
+							depth: 35,
+							dataLabels: {
+								enabled: true,
+								format: "{point.percentage:.1f}%",
+								distance: -50,
+							},
+							showInLegend: true,
+						},
+					},
+					series: [
+						{
+							type: "pie",
+							name: "Browser share",
+							data: dataSeries,
+						},
+					],
+					exporting: {
+						enabled: false,
+					},
+				});
+			},
+		});
+	}
 }
 
 $(document).ready(function() {obj.init()});

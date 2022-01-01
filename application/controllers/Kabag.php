@@ -13,9 +13,17 @@ class Kabag extends CI_Controller
 
 	public function index()
 	{
+		$employee_data = $this->Kabag_m->getEmployeeData($this->session->userdata('department_id'))->result_array();
+		$data['sumEmployee'] = count($employee_data);
+		$data['penilaian'] = $this->getResultData();
+		$data['avgAll'] = $this->getAvgAll();
+		// print_r($data['penilaian']);die;
+		$jsFile['jsFile'] = 'kabag';
+
 		$this->load->view('components/header');
-		$this->load->view('kabag/v_index');
-		$this->load->view('components/footer');
+		$this->load->view('components/top_bar');
+		$this->load->view('kabag/v_index', $data);
+		$this->load->view('components/footer', $jsFile);
 	}
 
 	public function kriteria()
@@ -62,12 +70,17 @@ class Kabag extends CI_Controller
 		for ($i = 0; $i < count($employee_data); $i++) {
 			$month = date('m') - 1;
 			$year = date('Y');
+			if($month == 0) {
+				$month = 12;
+				$year = date('Y') - 1;
+			}
 			$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month, $year)->result_array();
 			$employee_data[$i]['count_rating'] = count($rating);
 
 			$where = [
 				"karyawan_id" => $employee_data[$i]['id'],
 				"month" => $month,
+				"year" => $year,
 				"version" => $criteria_used
 			];
 	
@@ -103,6 +116,10 @@ class Kabag extends CI_Controller
 		}
 		$month = date('m') - 1;
 		$year = date('Y');
+		if($month == 0) {
+			$month = 12;
+			$year = date('Y') - 1;
+		}
 		$rating = $this->Kabag_m->getPenilaian($employee_id, $criterias_id, $month, $year)->result_array();
 
 		$data['criteria_data'] = $criterias;
@@ -340,8 +357,13 @@ class Kabag extends CI_Controller
 			array_push($criterias_id, $criteria['id']);
 		}
 
-		$month = date('m') - 1;
+
 		$year = date('Y');
+		$month = date('m') - 1;
+		if($month == 0) {
+			$month = 12;
+			$year = date('Y') - 1;
+		}
 		for ($i=0; $i < count($criterias); $i++) { 
 			$criteriaValue = $post['kriteria'.$i];
 			$ratingValue = $post['rating'.$i];
@@ -350,6 +372,7 @@ class Kabag extends CI_Controller
 				"sub_criteria_id" => $ratingValue,
 				"criteria_version" => $criteria_used,
 				"month" => $month,
+				"year" => $year,
 				"karyawan_id" => $post['karyawan_id']
 			];
 			$this->Core_m->insertData($data, 'rating');
@@ -364,6 +387,7 @@ class Kabag extends CI_Controller
 			"karyawan_id" => $post['karyawan_id'],
 			"version" => $criteria_used,
 			"month" => $month,
+			"year" => $year,
 			"result" => $result
 		];
 
@@ -386,6 +410,10 @@ class Kabag extends CI_Controller
 
 		$month = date('m') - 1;
 		$year = date('Y');
+		if($month == 0) {
+			$month = 12;
+			$year = date('Y') - 1;
+		}
 		$id = null;
 		for ($i=0; $i < count($criterias); $i++) { 
 			$criteriaValue = $post['kriteria'.$i];
@@ -408,6 +436,7 @@ class Kabag extends CI_Controller
 		$where = [
 			"karyawan_id" => $employee_id,
 			"month" => $month,
+			"year" => $year,
 			"version" => $criteria_used
 		];
 
@@ -475,5 +504,65 @@ class Kabag extends CI_Controller
 		echo $result;echo "<br/>";
 
 		return $result;
+	}
+
+	public function getEmployeeByGender() {
+		echo json_encode($this->Kabag_m->getEmployeeByGender($this->session->userdata('department_id'))->result());
+	}
+
+	public function getResultData() {
+		$result = array();
+		$criteria_used_row = $this->Kabag_m->getCriteriaUsed($this->session->userdata('department_id'))->row_array();
+		$criteria_used = $criteria_used_row['version'];
+		$employee_data = $this->Kabag_m->getEmployeeData($this->session->userdata('department_id'))->result_array();
+
+		foreach ($employee_data as $employee) {
+			$where = array(
+				"karyawan_id" => $employee['id'],
+				"version" => $criteria_used
+			);
+
+			$temps = $this->Kabag_m->getResult($where)->result_array();
+			$avg = 0;
+			$sum = 0;
+			$count_data = count($temps);
+			foreach ($temps as $temp) {
+				$sum = $sum + (float) $temp['result'];
+			}
+			$avg = $sum / $count_data;
+			$data = ["name"=>$employee['first_name'].' '. $employee['last_name'], "avg"=>$avg, "data"=>$count_data];
+			array_push($result, $data);
+		}
+
+		usort($result, function ($item1, $item2) {
+			if ($item1['avg'] == $item2['avg']) return 0;
+			return $item1['avg'] < $item2['avg'] ? -1 : 1;
+		});
+
+		return $result;
+	}
+
+	public function getAvgAll() {
+		$result = array();
+		$criteria_used_row = $this->Kabag_m->getCriteriaUsed($this->session->userdata('department_id'))->row_array();
+		$criteria_used = $criteria_used_row['version'];
+		$employee_data = $this->Kabag_m->getEmployeeData($this->session->userdata('department_id'))->result_array();
+		$ids = array();
+
+		foreach ($employee_data as $employee) {
+			array_push($ids, $employee['id']);
+		}
+
+		$temps = $this->Kabag_m->getResultInId($ids, $criteria_used)->result_array();
+
+		$avg = 0;
+		$sum = 0;
+		foreach ($temps as $temp) {
+			$sum = $sum + $temp['result'];
+		}
+
+		$avg = $sum / count($temps);
+		
+		return $avg;
 	}
 }

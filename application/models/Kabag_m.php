@@ -27,6 +27,11 @@ class Kabag_m extends CI_Model
 		return $this->db->get('karyawan');
 	}
 
+	public function getEmployeeByGender($dept_id) {
+		$sql = "SELECT jk, count(*) as jml FROM `karyawan` where departemen_id = $dept_id GROUP by jk";
+		return $this->db->query($sql);
+	}
+
 	function getPenilaian($employee_id, $criterias_id, $month, $year) {
 		$criterias_id = join(',',$criterias_id);
 		$sql = "SELECT r.*, c.weight, sc.weight, sc.name, c.weight as cweight from rating r left join criteria c on c.id = r.criteria_id left join sub_criteria sc on sc.id = r.sub_criteria_id where r.karyawan_id = $employee_id and r.criteria_id in ($criterias_id) and r.month = $month and r.year = $year";
@@ -48,5 +53,12 @@ class Kabag_m extends CI_Model
 		$this->db->where($where);
 		return $this->db->get('result_penilaian');
 	}
+
+	function getResultInId($employees_id, $version) {
+		$this->db->where('version', $version);
+		$this->db->where_in('karyawan_id', $employees_id);
+		return $this->db->get('result_penilaian');
+	}
+	
 
 }
