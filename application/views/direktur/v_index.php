@@ -1,8 +1,8 @@
 	<div class="left-side-bar">
 		<div class="brand-logo">
 			<a href="index.html">
-				<img src="assets/vendors/images/deskapp-logo.svg" alt="" class="dark-logo">
-				<img src="assets/vendors/images/deskapp-logo-white.svg" alt="" class="light-logo">
+				<img src="<?=base_url()?>assets/vendors/images/deskapp-logo.svg" alt="" class="dark-logo">
+				<img src="<?=base_url()?>assets/vendors/images/deskapp-logo-white.svg" alt="" class="light-logo">
 			</a>
 			<div class="close-sidebar" data-toggle="left-sidebar-close">
 				<i class="ion-close-round"></i>
@@ -12,13 +12,13 @@
 			<div class="sidebar-menu">
 				<ul id="accordion-menu">
 					<li>
-						<a href="" class="dropdown-toggle no-arrow">
+						<a href="<?= base_url() ?>direk" class="dropdown-toggle no-arrow">
 						<i class="micon icon-copy fa fa-dashboard" aria-hidden="true"></i><span class="mtext">Dashboard</span>
 							<!-- <span class="micon dw dw-house-1"></span><span class="mtext">Dashboard</span> -->
 						</a>
 					</li>
 					<li>
-						<a href="" class="dropdown-toggle no-arrow">
+						<a href="<?= base_url() ?>direk/kinerja" class="dropdown-toggle no-arrow">
 						<i class="micon icon-copy dw dw-file"></i><span class="mtext">Kinerja Karyawan</span>
 							<!-- <span class="micon dw dw-house-1"></span><span class="mtext">Riwayat Penilaian</span> -->
 						</a>
@@ -45,60 +45,51 @@
 				</div>
 			</div> -->
 			<div class="row">
-				<div class="col-xl-3 mb-30">
+				<div class="col-xl-6 mb-30">
 					<div class="card-box height-100-p widget-style1">
 						<div class="d-flex flex-wrap align-items-center">
 							<div class="progress-data">
-								<div id="chart"></div>
+								<!-- <div id="chart"></div> -->
+								<div style="height: 120px; display: grid; text-align: center; align-items: center;">
+									<i class="micon icon-copy dw dw-user1 fa-3x"></i>
+								</div>
 							</div>
 							<div class="widget-data">
-								<div class="h4 mb-0">2020</div>
-								<div class="weight-600 font-14">Contact</div>
+								<div class="h4 mb-0"><?=$sumEmployee?></div>
+								<div class="weight-600 font-14">Jumlah Karyawan Tetap</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-3 mb-30">
+				<div class="col-xl-6 mb-30">
 					<div class="card-box height-100-p widget-style1">
 						<div class="d-flex flex-wrap align-items-center">
 							<div class="progress-data">
-								<div id="chart2"></div>
+								<!-- <div id="chart2"></div> -->
+								<div style="height: 120px; display: grid; text-align: center; align-items: center;">
+									<i class="micon dw dw-diagram fa-3x" aria-hidden="true"></i>
+								</div>
 							</div>
 							<div class="widget-data">
-								<div class="h4 mb-0">400</div>
-								<div class="weight-600 font-14">Deals</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-3 mb-30">
-					<div class="card-box height-100-p widget-style1">
-						<div class="d-flex flex-wrap align-items-center">
-							<div class="progress-data">
-								<div id="chart3"></div>
-							</div>
-							<div class="widget-data">
-								<div class="h4 mb-0">350</div>
-								<div class="weight-600 font-14">Campaign</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-xl-3 mb-30">
-					<div class="card-box height-100-p widget-style1">
-						<div class="d-flex flex-wrap align-items-center">
-							<div class="progress-data">
-								<div id="chart4"></div>
-							</div>
-							<div class="widget-data">
-								<div class="h4 mb-0">$6060</div>
-								<div class="weight-600 font-14">Worth</div>
+								<div class="h4 mb-0"><?=$sumDepartment?></div>
+								<div class="weight-600 font-14">Jumlah Bagian</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<h4>Rata-Rata Penilaian Kinerja</h3>
+			<div class="outer my-4" style="width: 100%; padding-bottom: 20px;">
+				<?php foreach ($avgByDept as $avgData) : ?>
+					<div style="width: 25%; height: 100px;">
+						<div class="card-box px-4" style="width: 100%; padding-top: 20px; background-color: white;">
+							<h4><?=$avgData['avg']?></h4>
+							<p><?=$avgData['dept_name']?></p>
+						</div>
+					</div>
+				<?php endforeach; ?>
+			</div>
+			<!-- <div class="row">
 				<div class="col-xl-8 mb-30">
 					<div class="card-box height-100-p pd-20">
 						<h2 class="h4 mb-20">Activity</h2>
@@ -113,7 +104,6 @@
 				</div>
 			</div>
 			<div class="card-box mb-30">
-				<!-- <h2 class="h4 pd-20">Best Selling Products</h2> -->
 				<h2 class="h4 pd-20">Top 5 Karyawan</h2>
 				<table class="data-table table nowrap">
 					<thead>
@@ -255,7 +245,7 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>
+			</div> -->
 			<div class="footer-wrap pd-20 mb-20 card-box">
 				DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
 			</div>

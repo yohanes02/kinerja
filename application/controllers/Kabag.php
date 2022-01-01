@@ -15,8 +15,13 @@ class Kabag extends CI_Controller
 	{
 		$employee_data = $this->Kabag_m->getEmployeeData($this->session->userdata('department_id'))->result_array();
 		$data['sumEmployee'] = count($employee_data);
-		$data['penilaian'] = $this->getResultData();
-		$data['avgAll'] = $this->getAvgAll();
+		if(count($employee_data) == 0) {
+			$data['penilaian'] = array();
+			$data['avgAll'] = 0;
+		} else {
+			$data['penilaian'] = $this->getResultData();
+			$data['avgAll'] = $this->getAvgAll();
+		}
 		// print_r($data['penilaian']);die;
 		$jsFile['jsFile'] = 'kabag';
 
