@@ -14,6 +14,7 @@ class Direk extends CI_Controller {
 		$data['sumEmployee'] = count($this->Core_m->getAll('karyawan')->result_array());
 		$data['sumDepartment'] = count($this->Core_m->getAll('departemen')->result_array());
 		$data['avgByDept'] = $this->getAvgAllDept();
+		$data['sumEmployeeDept'] = $this->getEmployeePerDept();
 
 		$jsFile['jsFile'] = 'direk';
 
@@ -283,6 +284,19 @@ class Direk extends CI_Controller {
 		$employees = $this->Direk_m->getEmployeeByDept($department)->result_array();
 
 		echo json_encode($employees);
+	}
+
+	public function getEmployeePerDept() {
+		$result = array();
+		$deparments = $this->Core_m->getAll('departemen')->result_array();
+		foreach ($deparments as $deparment) {
+			$dataEmployee = $this->Direk_m->getEmployeeSumByDept($deparment['id'])->result_array();
+			$arr['sum'] = count($dataEmployee);
+			$arr['name'] = $deparment['name'];
+			array_push($result, $arr);
+		}
+		// print_r($result);die;
+		return $result;
 	}
 }
 

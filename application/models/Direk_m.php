@@ -22,4 +22,13 @@ class Direk_m extends CI_Model
 		$this->db->where(['departemen_id'=>$dept_id]);
 		return $this->db->get('karyawan');
 	}
+
+	function getEmployeeSumByDept($dept_id) {
+
+		// $sql = "select d.name, count(*) as sum from karyawan k left join departemen d on d.id = k.departemen_id GROUP BY departemen_id";
+		// return $this->db->query($sql);
+
+		$this->db->where(['departemen_id'=>$dept_id]);
+		return $this->db->get('karyawan');
+	}
 }

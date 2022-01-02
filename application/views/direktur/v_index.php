@@ -78,8 +78,19 @@
 					</div>
 				</div>
 			</div>
+			<h4>Jumlah Karyawan Per Bagian</h4>
+			<div class="row pt-20">
+				<?php foreach($sumEmployeeDept as $dt) : ?>
+				<div class="col-xl-4 mb-30">
+					<div class="card-box px-3 py-3" style="height: 80px;">
+						<h4><?=$dt['sum']?></h4>
+						<p><?=$dt['name']?></p>
+					</div>
+				</div>
+				<?php endforeach; ?>
+			</div>
 			<h4>Rata-Rata Penilaian Kinerja</h3>
-			<div class="outer my-4" style="width: 100%; padding-bottom: 20px;">
+			<!-- <div class="outer my-4" style="width: 100%; padding-bottom: 20px;">
 				<?php foreach ($avgByDept as $avgData) : ?>
 					<div style="width: 25%; height: 100px;">
 						<div class="card-box px-4" style="width: 100%; padding-top: 20px; background-color: white;">
@@ -88,7 +99,18 @@
 						</div>
 					</div>
 				<?php endforeach; ?>
+			</div> -->
+			<div class="row pt-20">
+				<?php foreach($avgByDept as $avgData) : ?>
+				<div class="col-xl-4 mb-30">
+					<div class="card-box px-3 py-3" style="height: 80px;">
+						<h4><?=$avgData['avg']?></h4>
+						<p><?=$avgData['dept_name']?></p>
+					</div>
+				</div>
+				<?php endforeach; ?>
 			</div>
+
 			<!-- <div class="row">
 				<div class="col-xl-8 mb-30">
 					<div class="card-box height-100-p pd-20">
