@@ -502,9 +502,12 @@ class Kabag extends CI_Controller
 		$nilaiS = array_sum($nilai2);
 		$nilaiR = max($nilai2);
 
+		$nilaiRMax = max($arrCWeight);
+
 		echo $nilaiS . ',' . $nilaiR;echo "<br/>";
 
-		$result = (0.5*(($nilaiS-0)/(100-0))) + ((1-0.5)*(($nilaiR-0)/(100-0)));
+		// $result = (0.5*(($nilaiS-0)/(100-0))) + ((1-0.5)*(($nilaiR-0)/(100-0)));
+		$result = (0.5*(($nilaiS-0)/(100-0))) + ((1-0.5)*(($nilaiR-0)/($nilaiRMax-0)));
 
 		echo $result;echo "<br/>";
 
