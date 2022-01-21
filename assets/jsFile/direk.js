@@ -19,16 +19,42 @@ var obj = {
 			var arrYear = [];
 
 			console.log(startMonth, endMonth, startYear, endYear);
+			$arrTempYear = [];
+			for (let iiii = startYear; iiii <= endYear; iiii++) {
+				$arrTempYear.push(iiii);
+			}
 
 			if (startYear != endYear) {
-				for (let ii = startMonth; ii <= 12; ii++) {
-					arrMonth.push(ii);
-					arrYear.push(startYear);
+				for (let iiiii = 0; iiiii < $arrTempYear.length; iiiii++) {
+					if($arrTempYear[iiiii] == startYear) {
+						for (let ii = startMonth; ii <= 12; ii++) {
+							arrMonth.push(ii);
+							arrYear.push(startYear);
+						}
+					}
+
+					else if($arrTempYear[iiiii] == $arrTempYear[$arrTempYear.length - 1]) {
+						for (let iii = 1; iii <= endMonth; iii++) {
+							arrMonth.push(iii);
+							arrYear.push(endYear);
+						}
+					} else {
+						for (let iiiiii = 1; iiiiii <= 12; iiiiii++) {
+							arrMonth.push(iiiiii);
+							arrYear.push($arrTempYear[iiiii]);
+						}
+					}
+
+					
 				}
-				for (let iii = 1; iii <= endMonth; iii++) {
-					arrMonth.push(iii);
-					arrYear.push(endYear);
-				}
+				// for (let ii = startMonth; ii <= 12; ii++) {
+				// 	arrMonth.push(ii);
+				// 	arrYear.push(startYear);
+				// }
+				// for (let iii = 1; iii <= endMonth; iii++) {
+				// 	arrMonth.push(iii);
+				// 	arrYear.push(endYear);
+				// }
 			} else {
 				for (let idx = startMonth; idx <= endMonth; idx++) {
 					arrMonth.push(idx);

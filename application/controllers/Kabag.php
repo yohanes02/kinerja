@@ -589,9 +589,9 @@ class Kabag extends CI_Controller
 				$avg = 0;
 			} else {
 				$avg = $sum / $count_data;
+				$data = ["name"=>$employee['first_name'].' '. $employee['last_name'], "avg"=>$avg, "data"=>$count_data];
+				array_push($result, $data);
 			}
-			$data = ["name"=>$employee['first_name'].' '. $employee['last_name'], "avg"=>$avg, "data"=>$count_data];
-			array_push($result, $data);
 		}
 
 		usort($result, function ($item1, $item2) {
