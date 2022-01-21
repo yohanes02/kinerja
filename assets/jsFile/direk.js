@@ -7,10 +7,14 @@ var obj = {
 		$("#get-riwayat").click(function () {
 			var department = $("#department-id").val();
 			var employee = $("#employee-id").val();
-			var startMonth = new Date($("#month-rating-start").val()).getMonth() + 1;
-			var endMonth = new Date($("#month-rating-end").val()).getMonth() + 1;
-			var startYear = new Date($("#month-rating-start").val()).getFullYear();
-			var endYear = new Date($("#month-rating-end").val()).getFullYear();
+			var splitStart = $("#month-rating-start").val().split(" ");
+			var startVal = splitStart[1] + '-' +_this.getMonth(splitStart[0]);
+			var splitEnd = $("#month-rating-end").val().split(" ");
+			var endVal = splitEnd[1] + '-' +_this.getMonth(splitEnd[0]);
+			var startMonth = new Date(startVal).getMonth() + 1;
+			var endMonth = new Date(endVal).getMonth() + 1;
+			var startYear = new Date(startVal).getFullYear();
+			var endYear = new Date(endVal).getFullYear();
 			var arrMonth = [];
 			var arrYear = [];
 
@@ -125,6 +129,48 @@ var obj = {
 
 
 		});
+	},
+	getMonth(month) {
+		var intMonth;
+		switch (month) {
+			case 'January':
+				intMonth = 1;
+				break;
+			case 'February':
+				intMonth = 2;
+				break;
+			case 'March':
+				intMonth = 3;
+				break;
+			case 'April':
+				intMonth = 4;
+				break;	
+			case 'May':
+				intMonth = 5;
+				break;
+			case 'Juny':
+				intMonth = 6;
+				break;
+			case 'July':
+				intMonth = 7;
+				break;
+			case 'August':
+				intMonth = 8;
+				break;
+			case 'September':
+				intMonth = 9;
+				break;
+			case 'October':
+				intMonth = 10;
+				break;
+			case 'November':
+				intMonth = 11;
+				break;	
+			default:
+				intMonth = 12;
+				break;
+		}
+		return intMonth;
 	},
 	createDivDepartments: function createDivDepartment(
 		id,

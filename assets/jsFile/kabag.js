@@ -4,6 +4,7 @@ var obj = {
 		this.addListener();
 	},
 	addListener: function addListener() {
+		var _this = this;
 		$("#add-new-criteria").click(function() {
 			var lastLength = $("#kriteria-length").val();
 			var nowLength = parseInt(lastLength) + 1;
@@ -215,14 +216,24 @@ var obj = {
 		});
 		$("#get-riwayat").click(function() {
 			console.log('click');
-			var startMonth = new Date($("#month-rating-start").val()).getMonth()+1;
-			var endMonth = new Date($("#month-rating-end").val()).getMonth()+1;
+			// var startMonth = new Date($("#month-rating-start").val()).getMonth()+1;
+			// var endMonth = new Date($("#month-rating-end").val()).getMonth()+1;
+			// var startMonth = moment($("#month-rating-start").val()).format("M");
+			// var endMonth = moment($("#month-rating-end").val()).format("M");
 			// var startMonth = parseInt($("#month-rating-start").val());
 			// var endMonth = parseInt($("#month-rating-end").val());
 			// var startMonth = 9;
 			// var endMonth = 1;
-			var startYear = new Date($("#month-rating-start").val()).getFullYear();
-			var endYear = new Date($("#month-rating-end").val()).getFullYear();
+			// var startYear = new Date($("#month-rating-start").val()).getFullYear();
+			// var endYear = new Date($("#month-rating-end").val()).getFullYear();
+			var splitStart = $("#month-rating-start").val().split(" ");
+			var startVal = splitStart[1] + '-' +_this.getMonth(splitStart[0]);
+			var splitEnd = $("#month-rating-end").val().split(" ");
+			var endVal = splitEnd[1] + '-' +_this.getMonth(splitEnd[0]);
+			var startMonth = new Date(startVal).getMonth() + 1;
+			var endMonth = new Date(endVal).getMonth() + 1;
+			var startYear = new Date(startVal).getFullYear();
+			var endYear = new Date(endVal).getFullYear();
 			var arrMonth = [];
 			var arrYear = [];
 
@@ -351,6 +362,48 @@ var obj = {
 				}
 			});
 		});
+	},
+	getMonth(month) {
+		var intMonth;
+		switch (month) {
+			case 'January':
+				intMonth = 1;
+				break;
+			case 'February':
+				intMonth = 2;
+				break;
+			case 'March':
+				intMonth = 3;
+				break;
+			case 'April':
+				intMonth = 4;
+				break;	
+			case 'May':
+				intMonth = 5;
+				break;
+			case 'Juny':
+				intMonth = 6;
+				break;
+			case 'July':
+				intMonth = 7;
+				break;
+			case 'August':
+				intMonth = 8;
+				break;
+			case 'September':
+				intMonth = 9;
+				break;
+			case 'October':
+				intMonth = 10;
+				break;
+			case 'November':
+				intMonth = 11;
+				break;	
+			default:
+				intMonth = 12;
+				break;
+		}
+		return intMonth;
 	},
 	generateChart: function generateChart() {
 		this.chartGenderPie();

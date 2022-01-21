@@ -1,8 +1,7 @@
 	<div class="left-side-bar">
 		<div class="brand-logo">
 			<a href="index.html">
-				<img src="assets/vendors/images/deskapp-logo.svg" alt="" class="dark-logo">
-				<img src="assets/vendors/images/deskapp-logo-white.svg" alt="" class="light-logo">
+				<img src="<?=base_url()?>assets/vendors/images/intimap-logo.png" alt="" class="light-logo">
 			</a>
 			<div class="close-sidebar" data-toggle="left-sidebar-close">
 				<i class="ion-close-round"></i>
@@ -152,6 +151,26 @@
 					<!-- <h4>Daftar User</h4> -->
 					<!-- </div> -->
 				</div>
+				<?php if($this->session->flashdata('errInsEmployee')) : ?>
+					<div class="alert alert-danger" role="alert">
+						<?php echo $this->session->flashdata('errInsEmployee') ?>
+					</div>
+				<?php endif; ?>
+				<?php if($this->session->flashdata('errUpdEmployee')) : ?>
+					<div class="alert alert-danger" role="alert">
+						<?php echo $this->session->flashdata('errUpdEmployee') ?>
+					</div>
+				<?php endif; ?>
+				<?php if($this->session->flashdata('successInsEmployee')) : ?>
+					<div class="alert alert-success" role="alert">
+						<?php echo $this->session->flashdata('successInsEmployee') ?>
+					</div>
+				<?php endif; ?>
+				<?php if($this->session->flashdata('successUpdEmployee')) : ?>
+					<div class="alert alert-success" role="alert">
+						<?php echo $this->session->flashdata('successUpdEmployee') ?>
+					</div>
+				<?php endif; ?>
 				<div class="table-responsive">
 					<table class="table table-striped">
 						<thead>
@@ -159,7 +178,7 @@
 								<th scope="col">No</th>
 								<th scope="col">Nama</th>
 								<th scope="col">Bagian</th>
-								<th scope="col" width="25%">Action</th>
+								<th scope="col" width="30%">Action</th>
 							</tr>
 						</thead>
 						<tbody>

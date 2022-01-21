@@ -3,7 +3,7 @@
 		<div class="container-fluid d-flex justify-content-between align-items-center">
 			<div class="brand-logo">
 				<a href="login.html">
-					<img src="<?= base_url() ?>assets/vendors/images/deskapp-logo.svg" alt="">
+					<img src="<?=base_url()?>assets/vendors/images/intimap-logo.png" alt="" class="light-logo">
 				</a>
 			</div>
 			<!-- <div class="login-menu">
@@ -60,9 +60,9 @@
 										<label class="custom-control-label" for="customCheck1">Remember</label>
 									</div> -->
 								</div>
-								<div class="col-6">
+								<!-- <div class="col-6">
 									<div class="forgot-password"><a href="forgot_pass">Forgot Password</a></div>
-								</div>
+								</div> -->
 							</div>
 							<div class="row">
 								<div class="col-sm-12">

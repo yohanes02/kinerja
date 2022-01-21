@@ -104,8 +104,16 @@ class Hrd extends CI_Controller {
 			'address'			=> $address,
 			'departemen_id' => $departmentId
 		];
+
+		$checkFullName = $this->Hrd_m->checkFullName($firstName, $lastName)->result_array();
+
+		if(count($checkFullName) > 0) {
+			$this->session->set_flashdata('errInsEmployee', 'Menambahkan karyawan tidak berhasil');
+			redirect('hrd/karyawan');
+		}
 		
 		$this->Core_m->insertData($ins, 'karyawan');
+		$this->session->set_flashdata('successInsEmployee', 'Karyawan berhasil ditambahkan');
 		redirect('hrd/karyawan');
 	}
 
@@ -137,8 +145,26 @@ class Hrd extends CI_Controller {
 			'address'			=> $address,
 			'departemen_id' => $departmentId
 		];
+
+		$checkFullName = $this->Hrd_m->checkFullName($firstName, $lastName)->result_array();
+
+		$continue = true;
+
+		if(count($checkFullName) > 0) {
+			foreach ($checkFullName as $dt) {
+				if ($dt['id'] != $employeeId) {
+					$continue = false;
+				}
+			}
+
+			if(!$continue) {
+				$this->session->set_flashdata('errUpdEmployee', 'Update data karyawan tidak berhasil');
+				redirect('hrd/karyawan');
+			}
+		}
 		
 		$this->Core_m->updateData($employeeId, $ins, 'karyawan');
+		$this->session->set_flashdata('successUpdEmployee', 'Update data karyawan berhasil');
 		redirect('hrd/karyawan');
 	}
 
@@ -157,11 +183,20 @@ class Hrd extends CI_Controller {
 			'email'			=> $email
 		];
 
+		$uname = $this->Hrd_m->checkUnameExist($username)->result_array();
+		$mail = $this->Hrd_m->checkEmailExist($email)->result_array();
+
+		if(count($uname) > 0 || count($mail) > 0) {
+			$this->session->set_flashdata('errIns', 'Menambahkan user tidak berhasil, email atau username sudah terdaftar pada user lain.');
+			redirect('hrd/user');
+		}
+
 		if($userType == "2") {
 			$ins['department_id'] = $post['departemen'];
 		}
 
 		$this->Core_m->insertData($ins, 'user');
+		$this->session->set_flashdata('successIns', 'User berhasil ditambahkan.');
 		redirect('hrd/user');
 	}
 
@@ -174,7 +209,15 @@ class Hrd extends CI_Controller {
 			'name'	=> $bagianName
 		];
 
+		$bagianExist = $this->Hrd_m->checkBagianExist($bagianName)->result_array();
+
+		if(count($bagianExist) > 0) {
+			$this->session->set_flashdata('errInsBagian', 'Data bagian gagal ditambahkan.');
+			redirect('hrd/bagian');
+		}
+
 		$this->Core_m->insertData($ins, 'departemen');
+		$this->session->set_flashdata('successInsBagian', 'Data bagian berhasil ditambahkan');
 		redirect('hrd/bagian');
 	}
 
@@ -188,6 +231,7 @@ class Hrd extends CI_Controller {
 		$checkCurrentPassSend = $this->Hrd_m->checkPassword($userId, $currentPassword)->row_array();
 
 		if (empty($checkCurrentPassSend)) {
+			$this->session->set_flashdata('errChangePass', 'Ganti Password gagal, password yang dimasukkan tidak sesuai.');
 			redirect('hrd/user');
 		}
 
@@ -205,7 +249,26 @@ class Hrd extends CI_Controller {
 			'name'	=> $bagianName
 		];
 
+		$bagianExist = $this->Hrd_m->checkBagianExist($bagianName)->result_array();
+
+		$continue = true;
+
+		if(count($bagianExist) > 0) {
+
+			foreach ($bagianExist as $dt) {
+				if($dt['id'] != $bagianId) {
+					$continue = false;
+				}
+			}
+			if(!$continue) {
+				$this->session->set_flashdata('errUpdBagian', 'Update data bagian gagal');
+				redirect('hrd/bagian');
+			}
+			
+		}
+
 		$this->Core_m->updateData($bagianId, $ins, 'departemen');
+		$this->session->set_flashdata('successUpdBagian', 'Update data bagian berhasil');
 		redirect('hrd/bagian');
 
 	}
@@ -224,11 +287,34 @@ class Hrd extends CI_Controller {
 			'email'			=> $email
 		];
 
+		$uname = $this->Hrd_m->checkUnameExist($username)->result_array();
+		$mail = $this->Hrd_m->checkEmailExist($email)->result_array();
+
+		$continue = true;
+
+		if(count($uname) > 0 || count($mail) > 0) {
+			foreach ($uname as $dt) {
+				if($dt['id'] != $userId) {
+					$continue = false;
+				}
+			}
+			foreach ($mail as $dt) {
+				if($dt['id'] != $userId) {
+					$continue = false;
+				}
+			}
+			if (!$continue) {
+				$this->session->set_flashdata('errUpd', 'Update tidak berhasil, email atau username sudah terdaftar pada user lain.');
+				redirect('hrd/user');
+			}
+		}
+
 		if($userType == "2") {
 			$ins['department_id'] = $post['departemen'];
 		}
 
 		$this->Core_m->updateData($userId, $ins, 'user');
+		$this->session->set_flashdata('successUpd', 'Update data user berhasil.');
 		redirect('hrd/user');
 
 	}
@@ -335,7 +421,11 @@ class Hrd extends CI_Controller {
 			$resArr['dept_name'] = $dept['name'];
 			$resArr['data'] = array();
 			$criteria_used_row = $this->Kabag_m->getCriteriaUsed($dept['id'])->row_array();
-			$criteria_used = $criteria_used_row['version'];
+			if($criteria_used_row == null) {
+				$criteria_used = -1;
+			} else {
+				$criteria_used = $criteria_used_row['version'];
+			}
 			$criterias = $this->Kabag_m->getCriteriaData($dept['id'], $criteria_used)->result_array();
 			$criterias_name = array();
 			$criterias_id = array();
@@ -367,13 +457,16 @@ class Hrd extends CI_Controller {
 					// $month = date('m') - 1;
 					$month = $months[$h];
 					$year = $years[$h];
-					$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month, $year)->result_array();
 					$aa = array();
-					for ($j=0; $j < count($rating); $j++) { 
-						$b = array($rating[$j]['criteria_id'], $rating[$j]['name'], $rating[$i]['weight']);
-						array_push($aa, $b);
+					if($criterias_id != []) {
+						$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month, $year)->result_array();
+						
+						for ($j=0; $j < count($rating); $j++) { 
+							$b = array($rating[$j]['criteria_id'], $rating[$j]['name'], $rating[$j]['weight']);
+							array_push($aa, $b);
+						}
+						$a['cr'] = $aa;
 					}
-					$a['cr'] = $aa;
 		
 					$where = [
 						"karyawan_id" => $employee_data[$i]['id'],
@@ -395,8 +488,10 @@ class Hrd extends CI_Controller {
 				}
 	
 				usort($arr, function ($item1, $item2) {
-					if ($item1['result'] == $item2['result']) return 0;
-					return $item1['result'] < $item2['result'] ? -1 : 1;
+					if(isset($item1['result'])) {
+						if ($item1['result'] == $item2['result']) return 0;
+						return $item1['result'] < $item2['result'] ? -1 : 1;
+					}
 				});
 	
 				// var_dump($arr['result']);echo "<br/><br/>";
@@ -424,7 +519,11 @@ class Hrd extends CI_Controller {
 		}
 
 		$criteria_used_row = $this->Kabag_m->getCriteriaUsed($department_id)->row_array();
-		$criteria_used = $criteria_used_row['version'];
+		if($criteria_used_row == null) {
+			$criteria_used = -1;
+		} else {
+			$criteria_used = $criteria_used_row['version'];
+		}
 		$criterias = $this->Kabag_m->getCriteriaData($department_id, $criteria_used)->result_array();
 		$criterias_id = array();
 		$criterias_name = array();
@@ -456,13 +555,15 @@ class Hrd extends CI_Controller {
 				// $month = date('m') - 1;
 				$month = $months[$h];
 				$year = $years[$h];
-				$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month, $year)->result_array();
-				$aa = array();
-				for ($j=0; $j < count($rating); $j++) { 
-					$b = array($rating[$j]['criteria_id'], $rating[$j]['name'], $rating[$i]['weight']);
-					array_push($aa, $b);
+				if($criterias_id != []) {
+					$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month, $year)->result_array();
+					$aa = array();
+					for ($j=0; $j < count($rating); $j++) { 
+						$b = array($rating[$j]['criteria_id'], $rating[$j]['name'], $rating[$j]['weight']);
+						array_push($aa, $b);
+					}
+					$a['cr'] = $aa;
 				}
-				$a['cr'] = $aa;
 	
 				$where = [
 					"karyawan_id" => $employee_data[$i]['id'],
@@ -484,8 +585,10 @@ class Hrd extends CI_Controller {
 			}
 
 			usort($arr, function ($item1, $item2) {
-				if ($item1['result'] == $item2['result']) return 0;
-				return $item1['result'] < $item2['result'] ? -1 : 1;
+				if(isset($item1['result'])) {
+					if ($item1['result'] == $item2['result']) return 0;
+					return $item1['result'] < $item2['result'] ? -1 : 1;
+				}
 			});
 
 			// var_dump($arr['result']);echo "<br/><br/>";

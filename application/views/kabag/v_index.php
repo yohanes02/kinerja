@@ -1,8 +1,7 @@
 	<div class="left-side-bar">
 		<div class="brand-logo">
 			<a href="index.html">
-				<img src="assets/vendors/images/deskapp-logo.svg" alt="" class="dark-logo">
-				<img src="assets/vendors/images/deskapp-logo-white.svg" alt="" class="light-logo">
+				<img src="<?=base_url()?>assets/vendors/images/intimap-logo.png" alt="" class="light-logo">
 			</a>
 			<div class="close-sidebar" data-toggle="left-sidebar-close">
 				<i class="ion-close-round"></i>
@@ -19,7 +18,7 @@
 					</li>
 					<li>
 						<a href="<?= base_url() ?>kabag/kriteria" class="dropdown-toggle no-arrow">
-							<span class="micon dw dw-edit2"></span><span class="mtext">Kriteria Penelitian</span>
+							<span class="micon dw dw-edit2"></span><span class="mtext">Kriteria Penilaian</span>
 						</a>
 					</li>
 					<li>
@@ -103,13 +102,13 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php foreach ($penilaian as $data) : ?>
+								<?php $index = 1; foreach ($penilaian as $data) : if($index<6) :?>
 									<tr>
 										<td><?= $data['name'] ?></td>
 										<td><?= $data['data'] ?></td>
 										<td><?= $data['avg'] ?></td>
 									</tr>
-								<?php endforeach; ?>
+								<?php endif; $index++; endforeach; ?>
 								<!-- <tr>
 									<td>a</td>
 									<td>a</td>
@@ -137,29 +136,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="card-box mb-30 table-responsive">
-				<!-- <h2 class="h4 pd-20">Best Selling Products</h2> -->
-				<h2 class="h4 pd-20">Top 5 Karyawan</h2>
-				<table class="table">
-					<thead>
-						<tr>
-							<!-- <th class="table-plus datatable-nosort">Product</th> -->
-							<th>Name</th>
-							<th>Jumlah Data</th>
-							<th>Rata-rata</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php foreach ($penilaian as $data) : ?>
-							<tr>
-								<td><?= $data['name'] ?></td>
-								<td><?= $data['data'] ?></td>
-								<td><?= $data['avg'] ?></td>
-							</tr>
-						<?php endforeach; ?>
-					</tbody>
-				</table>
-			</div>
+
 			<div class="footer-wrap pd-20 mb-20 card-box">
 				DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit Hingarajiya</a>
 			</div>

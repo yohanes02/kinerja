@@ -1,8 +1,7 @@
 	<div class="left-side-bar">
 		<div class="brand-logo">
 			<a href="index.html">
-				<img src="assets/vendors/images/deskapp-logo.svg" alt="" class="dark-logo">
-				<img src="assets/vendors/images/deskapp-logo-white.svg" alt="" class="light-logo">
+				<img src="<?=base_url()?>assets/vendors/images/intimap-logo.png" alt="" class="light-logo">
 			</a>
 			<div class="close-sidebar" data-toggle="left-sidebar-close">
 				<i class="ion-close-round"></i>
@@ -59,6 +58,26 @@
 					<!-- <h4>Daftar User</h4> -->
 					<!-- </div> -->
 				</div>
+				<?php if($this->session->flashdata('errInsBagian')) : ?>
+					<div class="alert alert-danger" role="alert">
+						<?php echo $this->session->flashdata('errInsBagian') ?>
+					</div>
+				<?php endif; ?>
+				<?php if($this->session->flashdata('errUpdBagian')) : ?>
+					<div class="alert alert-danger" role="alert">
+						<?php echo $this->session->flashdata('errUpdBagian') ?>
+					</div>
+				<?php endif; ?>
+				<?php if($this->session->flashdata('successUpdBagian')) : ?>
+					<div class="alert alert-success" role="alert">
+						<?php echo $this->session->flashdata('successUpdBagian') ?>
+					</div>
+				<?php endif; ?>
+				<?php if($this->session->flashdata('successInsBagian')) : ?>
+					<div class="alert alert-success" role="alert">
+						<?php echo $this->session->flashdata('successInsBagian') ?>
+					</div>
+				<?php endif; ?>
 				<div class="table-responsive">
 					<table class="table table-striped">
 						<thead>

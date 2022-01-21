@@ -17,6 +17,26 @@ class Hrd_m extends CI_Model
 		return $this->db->affected_rows();
 	}
 
+	public function checkUnameExist($uname) {
+		$this->db->where(["username"=>$uname]);
+		return $this->db->get('user');
+	}
+
+	public function checkEmailExist($email) {
+		$this->db->where(["email"=>$email]);
+		return $this->db->get('user');
+	}
+
+	public function checkBagianExist($name) {
+		$this->db->where(["name"=>$name]);
+		return $this->db->get('departemen');
+	}
+
+	public function checkFullName($fname, $lname) {
+		$this->db->where(["first_name"=>$fname, "last_name"=>$lname]);
+		return $this->db->get('karyawan');
+	}
+
 	public function getDataEmployees() {
 		$sql = "SELECT K.*, D.name as departemen_name FROM karyawan K LEFT JOIN departemen D ON D.id = K.departemen_id";
 		return $this->db->query($sql);

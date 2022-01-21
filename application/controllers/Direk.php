@@ -43,7 +43,11 @@ class Direk extends CI_Controller {
 			// $arr = array();
 			$arr['dept_name'] = $dept['name'];
 			$criteria_used_row = $this->Kabag_m->getCriteriaUsed($dept['id'])->row_array();
-			$criteria_used = $criteria_used_row['version'];
+			if($criteria_used_row == null) {
+				$criteria_used = -1;
+			} else {
+				$criteria_used = $criteria_used_row['version'];
+			}
 			$employee_data = $this->Kabag_m->getEmployeeData($dept['id'])->result_array();
 			$employee_ids = array();
 			foreach ($employee_data as $employee) {
@@ -97,7 +101,7 @@ class Direk extends CI_Controller {
 			// if($employee != "all" && $department == "all") {
 
 			// } else {
-				$this->singleDept($department, $employee, $months, $years);die;
+				$this->singleDept($department, $employee, $months, $years);
 			// }
 		}
 
@@ -110,7 +114,11 @@ class Direk extends CI_Controller {
 			$resArr['dept_name'] = $dept['name'];
 			$resArr['data'] = array();
 			$criteria_used_row = $this->Kabag_m->getCriteriaUsed($dept['id'])->row_array();
-			$criteria_used = $criteria_used_row['version'];
+			if($criteria_used_row == null) {
+				$criteria_used = -1;
+			} else {
+				$criteria_used = $criteria_used_row['version'];
+			}
 			$criterias = $this->Kabag_m->getCriteriaData($dept['id'], $criteria_used)->result_array();
 			$criterias_name = array();
 			$criterias_id = array();
@@ -142,13 +150,15 @@ class Direk extends CI_Controller {
 					// $month = date('m') - 1;
 					$month = $months[$h];
 					$year = $years[$h];
-					$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month, $year)->result_array();
-					$aa = array();
-					for ($j=0; $j < count($rating); $j++) { 
-						$b = array($rating[$j]['criteria_id'], $rating[$j]['name'], $rating[$i]['weight']);
-						array_push($aa, $b);
+					if($criterias_id != []) {
+						$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month, $year)->result_array();
+						$aa = array();
+						for ($j=0; $j < count($rating); $j++) { 
+							$b = array($rating[$j]['criteria_id'], $rating[$j]['name'], $rating[$j]['weight']);
+							array_push($aa, $b);
+						}
+						$a['cr'] = $aa;
 					}
-					$a['cr'] = $aa;
 		
 					$where = [
 						"karyawan_id" => $employee_data[$i]['id'],
@@ -199,7 +209,11 @@ class Direk extends CI_Controller {
 		}
 
 		$criteria_used_row = $this->Kabag_m->getCriteriaUsed($department_id)->row_array();
-		$criteria_used = $criteria_used_row['version'];
+		if($criteria_used_row == null) {
+			$criteria_used = -1;
+		} else {
+			$criteria_used = $criteria_used_row['version'];
+		}
 		$criterias = $this->Kabag_m->getCriteriaData($department_id, $criteria_used)->result_array();
 		$criterias_id = array();
 		$criterias_name = array();
@@ -231,13 +245,15 @@ class Direk extends CI_Controller {
 				// $month = date('m') - 1;
 				$month = $months[$h];
 				$year = $years[$h];
-				$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month, $year)->result_array();
-				$aa = array();
-				for ($j=0; $j < count($rating); $j++) { 
-					$b = array($rating[$j]['criteria_id'], $rating[$j]['name'], $rating[$i]['weight']);
-					array_push($aa, $b);
+				if($criterias_id != []) {
+					$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month, $year)->result_array();
+					$aa = array();
+					for ($j=0; $j < count($rating); $j++) { 
+						$b = array($rating[$j]['criteria_id'], $rating[$j]['name'], $rating[$j]['weight']);
+						array_push($aa, $b);
+					}
+					$a['cr'] = $aa;
 				}
-				$a['cr'] = $aa;
 	
 				$where = [
 					"karyawan_id" => $employee_data[$i]['id'],

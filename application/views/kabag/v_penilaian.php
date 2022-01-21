@@ -1,8 +1,7 @@
 <div class="left-side-bar">
 	<div class="brand-logo">
 		<a href="index.html">
-			<img src="<?=base_url()?>assets/vendors/images/deskapp-logo.svg" alt="" class="dark-logo">
-			<img src="<?=base_url()?>assets/vendors/images/deskapp-logo-white.svg" alt="" class="light-logo">
+			<img src="<?=base_url()?>assets/vendors/images/intimap-logo.png" alt="" class="light-logo">
 		</a>
 		<div class="close-sidebar" data-toggle="left-sidebar-close">
 			<i class="ion-close-round"></i>
@@ -19,7 +18,7 @@
 				</li>
 				<li>
 					<a href="<?= base_url() ?>kabag/kriteria" class="dropdown-toggle no-arrow">
-						<span class="micon dw dw-edit2"></span><span class="mtext">Kriteria Penelitian</span>
+						<span class="micon dw dw-edit2"></span><span class="mtext">Kriteria Penilaian</span>
 					</a>
 				</li>
 				<li>
@@ -93,7 +92,7 @@
 				<!-- <div class="pull-left"> -->
 				<div class="row">
 					<div class="col-md-9">
-						<h4>Kriteria Penilaian</h4>
+						<h4>Penilaian Kinerja</h4>
 						<p>Bulan: <?=date("F Y", mktime(0, 0, 0, date('m') - 1, 10));?></p>
 					</div>
 					<!-- <div class="col-md-3">
