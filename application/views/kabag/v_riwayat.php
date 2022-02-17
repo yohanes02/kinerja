@@ -99,7 +99,7 @@
 							Info Kriteria Penilaian
 						</button>
 					</div>
-					<div id="info" class="collapse">
+					<div id="info" class="collapse show">
 						<div class="card-body">
 							<h4>Kriteria Penilaian</h4>
 							<?php $i=1; foreach ($criteria_data as $criteria) : ?>

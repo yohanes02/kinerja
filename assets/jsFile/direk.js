@@ -240,6 +240,7 @@ var obj = {
 		
 		var divInfo = document.createElement('div');
 		divInfo.classList.add('collapse');
+		divInfo.classList.add('show');
 		divInfo.setAttribute('id', 'info');
 		var divCardBody = document.createElement('div');
 		divCardBody.classList.add('card-body');
@@ -304,7 +305,7 @@ var obj = {
 					tr.append(th1);
 				});
 				var th2 = document.createElement("th");
-				th2.innerHTML = "Result";
+				th2.innerHTML = "Hasil";
 				tr.append(th2);
 				thead.append(tr);
 				tableParent.append(thead);
@@ -324,7 +325,21 @@ var obj = {
 						tr1.append(td1);
 					}
 					var td2 = document.createElement("td");
-					td2.innerHTML = e[idx].result;
+					var resultText;
+					if(1-e[idx].result >= 0.85) {
+						resultText = 'Sangat Baik';
+					} else if(1-e[idx].result >= 0.70) {
+						resultText = 'Baik';
+					} else if(1-e[idx].result >= 0.60) {
+						resultText = 'Cukup';
+					} else if(1-e[idx].result < 0.60 && 1-e[idx].result >= 50) {
+						resultText = 'Kurang';
+					} else {
+						resultText = 'Sangat Kurang';
+					}
+					td2.innerHTML = resultText + " (" + e[idx].result + ")";			
+					td2.style.fontWeight = 'bold';
+					// td2.innerHTML = e[idx].result;
 					tr1.append(td2);
 					tbody.append(tr1);
 				}
@@ -373,6 +388,7 @@ var obj = {
 
 		var divInfo = document.createElement('div');
 		divInfo.classList.add('collapse');
+		divInfo.classList.add('show');
 		divInfo.setAttribute('id', 'info');
 		var divCardBody = document.createElement('div');
 		divCardBody.classList.add('card-body');
@@ -437,7 +453,7 @@ var obj = {
 					tr.append(th1);
 				})
 				var th2 = document.createElement('th');
-				th2.innerHTML = 'Result';
+				th2.innerHTML = 'Hasil';
 				tr.append(th2);
 				thead.append(tr);
 				tableParent.append(thead);
@@ -458,7 +474,21 @@ var obj = {
 						tr1.append(td1);
 					}					
 					var td2 = document.createElement('td');
-					td2.innerHTML = e[idx].result;			
+					var resultText;
+					if(1-e[idx].result >= 0.85) {
+						resultText = 'Sangat Baik';
+					} else if(1-e[idx].result >= 0.70) {
+						resultText = 'Baik';
+					} else if(1-e[idx].result >= 0.60) {
+						resultText = 'Cukup';
+					} else if(1-e[idx].result < 0.60 && 1-e[idx].result >= 50) {
+						resultText = 'Kurang';
+					} else {
+						resultText = 'Sangat Kurang';
+					}
+					td2.innerHTML = resultText + " (" + e[idx].result + ")";			
+					td2.style.fontWeight = 'bold';
+					// td2.innerHTML = e[idx].result;			
 					tr1.append(td2);
 					tbody.append(tr1);
 				}

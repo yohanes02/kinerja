@@ -364,7 +364,21 @@ var obj = {
 									tr1.append(td1);
 								}					
 								var td2 = document.createElement('td');
-								td2.innerHTML = e[idx].result;			
+								var resultText;
+								if(1-e[idx].result >= 0.85) {
+									resultText = 'Sangat Baik';
+								} else if(1-e[idx].result >= 0.70) {
+									resultText = 'Baik';
+								} else if(1-e[idx].result >= 0.60) {
+									resultText = 'Cukup';
+								} else if(1-e[idx].result < 0.60 && 1-e[idx].result >= 50) {
+									resultText = 'Kurang';
+								} else {
+									resultText = 'Sangat Kurang';
+								}
+								td2.innerHTML = resultText + " (" + e[idx].result + ")";			
+								td2.style.fontWeight = 'bold';
+								// td2.innerHTML = e[idx].result;			
 								tr1.append(td2);
 								tbody.append(tr1);
 							}
