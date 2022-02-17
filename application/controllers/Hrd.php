@@ -44,6 +44,175 @@ class Hrd extends CI_Controller {
 		$this->load->view('components/footer', $jsFile);
 	}
 
+	public function kriteria() {
+		$jsFile['jsFile'] = 'hrd';
+
+		$data['departments'] = $this->Core_m->getAll('departemen')->result_array();
+		$data['criteria_datas'] = [];
+
+		$departments = $data['departments'];
+		for ($i=0; $i < count($departments); $i++) {
+			$criteria_used_row = $this->Kabag_m->getCriteriaUsed($departments[$i]['id'])->row_array();
+			if($criteria_used_row == null) {
+				$criteria_used = -1;
+			} else {
+				$criteria_used = $criteria_used_row['version'];
+			}
+			$criteria_data = $this->Kabag_m->getCriteriaData($departments[$i]['id'], $criteria_used)->result_array();
+			array_push($data['criteria_datas'], $criteria_data);
+		}
+		// print_r($data['criteria_datas'][0][0]['department_id']);die;
+		$this->load->view('components/header');
+		$this->load->view('components/top_bar');
+		$this->load->view('hrd/v_kriteria', $data);
+		$this->load->view('components/footer', $jsFile);
+	}
+
+	public function detail_kriteria($id)
+	{
+		$sub_criteria_data = $this->Kabag_m->getSubCriteriaData($id)->result_array();
+		$data['sub_criteria_data'] = $sub_criteria_data;
+		$data['criteria_id'] = $id;
+
+		$jsFile['jsFile'] = 'hrd';
+
+		$this->load->view('components/header');
+		$this->load->view('components/top_bar');
+		$this->load->view('hrd/v_sub_kriteria', $data);
+		$this->load->view('components/footer', $jsFile);
+	}
+
+	public function insert_criteria()
+	{
+		$post = $this->input->post();
+		$criteria_length = intval($post['kriteria_length']);
+		$deptId = $post['dept_id'];
+
+		$criteria_used_row = $this->Kabag_m->getCriteriaUsed($deptId)->row_array();
+
+		if ($criteria_used_row == null) {
+			$ins = [
+				'department_id' => $deptId,
+				'version' => 1,
+			];
+			// print_r($ins);
+			// echo "<br><br><br><br>";
+
+			$this->Core_m->insertData($ins, "used_criteria");
+		}
+
+		for ($i = 1; $i <= $criteria_length; $i++) {
+			if (!empty($post['criteria_new_name' . $i])) {
+				$ins = [
+					'name' => $post['criteria_new_name' . $i],
+					'weight' => $post['criteria_new_rating' . $i],
+					'department_id' => $deptId,
+					'version' => 1,
+				];
+				$this->Core_m->insertData($ins, "criteria");
+				// print_r($ins);
+				// echo "<br><br>";
+			}
+		} 
+		// die;
+
+		redirect('hrd/kriteria');
+	}
+
+	public function update_criteria()
+	{
+		$post = $this->input->post();
+		$deptId = $post['dept_id'];
+		// print_r($post);die;
+
+		$criteria_used_row = $this->Kabag_m->getCriteriaUsed($deptId)->row_array();
+		if($criteria_used_row == null) {
+			$criteria_used = -1;
+		} else {
+			$criteria_used = $criteria_used_row['version'];
+		}
+		$criteria_data = $this->Kabag_m->getCriteriaData($deptId, $criteria_used)->result_array();
+
+		// print_r($criteria_data);die;
+
+		for ($i = 0; $i < count($criteria_data); $i++) {
+			$kriteria_id = $post['criteria_id' . $i];
+			$data = [
+				'name' => $post['criteria_name' . $i],
+				'weight' => $post['criteria_rating' . $i],
+			];
+			// echo $kriteria_id;
+			// echo "<br>";
+			// print_r($data);
+			// echo "<br>";
+			// echo "<br>";
+
+			$this->Core_m->updateData($kriteria_id, $data, 'criteria');
+		}
+		// die;
+
+		redirect('hrd/kriteria');
+	}
+
+	public function update_criteria_name()
+	{
+		$post = $this->input->post();
+
+		$kriteria_id = $post['kriteria_id'];
+		$data = [
+			'name' => $post['kriteria_name'],
+		];
+		// print_r($data);die;
+
+		$this->Core_m->updateData($kriteria_id, $data, 'criteria');
+
+		redirect('hrd/kriteria');
+	}
+
+	public function insert_sub_criteria()
+	{
+		$post = $this->input->post();
+		$criteria_length = intval($post['kriteria_length']);
+
+		for ($i = 1; $i <= $criteria_length; $i++) {
+			if (!empty($post['criteria_new_name' . $i])) {
+				$ins = [
+					'name' => $post['criteria_new_name' . $i],
+					'weight' => $post['sub_criteria_new_rating' . $i],
+					'criteria_id' => $post['criteria_parent']
+				];
+				$this->Core_m->insertData($ins, "sub_criteria");
+			}
+		}
+
+		// redirect('kabag/detail_kriteria/' . $post['criteria_parent']);
+		redirect('hrd/kriteria');
+	}
+
+	public function update_sub_criteria()
+	{
+		$post = $this->input->post();
+		$criteria_length = intval($post['sub_kriteria_length_edit']);
+		// echo $criteria_length;die;
+
+		for ($i = 0; $i < $criteria_length; $i++) {
+			if (!empty($post['sub_criteria_name' . $i])) {
+				$sub_kriteria_id = $post['sub_criteria_id' . $i];
+				// echo $sub_kriteria_id."\n";
+				$data = [
+					'name' => $post['sub_criteria_name' . $i],
+					'weight' => $post['sub_criteria_rating' . $i]
+				];
+				// print_r($data);
+				$this->Core_m->updateData($sub_kriteria_id, $data, 'sub_criteria');
+			}
+		}
+
+		// die;
+		// redirect('kabag/detail_kriteria/' . $post['criteria_parent']);
+		redirect('hrd/kriteria');
+	}
+
 	public function bagian() {
 		$data['departments'] = $this->Core_m->getAll('departemen')->result_array();
 		$jsFile['jsFile'] = 'hrd';

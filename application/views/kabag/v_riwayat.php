@@ -16,11 +16,11 @@
 						<!-- <span class="micon dw dw-house-1"></span><span class="mtext">Dashboard</span> -->
 					</a>
 				</li>
-				<li>
-					<a href="<?= base_url() ?>kabag/kriteria" class="dropdown-toggle no-arrow">
+				<!-- <li>
+					<a href="<?php //echo base_url() ?>kabag/kriteria" class="dropdown-toggle no-arrow">
 						<span class="micon dw dw-edit2"></span><span class="mtext">Kriteria Penilaian</span>
 					</a>
-				</li>
+				</li> -->
 				<li>
 					<a href="<?= base_url() ?>kabag/penilaian" class="dropdown-toggle no-arrow">
 						<span class="micon dw dw-house-1"></span><span class="mtext">Penilaian Kinerja</span>
@@ -63,8 +63,8 @@
 						</div>
 						<div class="col-md-2">
 							<div class="form-group">
-								<label for="">Dari Bulan</label>
-								<input class="form-control month-picker" placeholder="Select Month" type="text" id="month-rating-start">
+								<label for="">Dari Bulan Tahun</label>
+								<input class="form-control month-picker" placeholder="Pilih Bulan Tahun" type="text" id="month-rating-start">
 								<!-- <select name="month_rating_start" id="month-rating-start" class="form-control custom-select">
 									<?php //for ($i=1; $i <= 12; $i++) : ?>
 										<option value="<?= $i ?>"><?= $i ?></option>
@@ -74,8 +74,8 @@
 						</div>
 						<div class="col-md-2">
 							<div class="form-group">
-								<label for="">Ke Bulan</label>
-								<input class="form-control month-picker" placeholder="Select Month" type="text" id="month-rating-end">
+								<label for="">Ke Bulan Tahun</label>
+								<input class="form-control month-picker" placeholder="Pilih Bulan Tahun" type="text" id="month-rating-end">
 								<!-- <select name="month_rating_end" id="month-rating-end" class="form-control custom-select">
 									<?php //for ($i=1; $i <= 12; $i++) : ?>
 										<option value="<?= $i ?>"><?= $i ?></option>

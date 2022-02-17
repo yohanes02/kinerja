@@ -16,11 +16,11 @@
 						<!-- <span class="micon dw dw-house-1"></span><span class="mtext">Dashboard</span> -->
 					</a>
 				</li>
-				<li>
-					<a href="<?= base_url() ?>kabag/kriteria" class="dropdown-toggle no-arrow">
+				<!-- <li>
+					<a href="<?php //echo base_url() ?>kabag/kriteria" class="dropdown-toggle no-arrow">
 						<span class="micon dw dw-edit2"></span><span class="mtext">Kriteria Penilaian</span>
 					</a>
-				</li>
+				</li> -->
 				<li>
 					<a href="<?= base_url() ?>kabag/penilaian" class="dropdown-toggle no-arrow">
 						<span class="micon dw dw-house-1"></span><span class="mtext">Penilaian Kinerja</span>
@@ -88,7 +88,7 @@
 							<div class="row">
 								<div class="col-md-6">
 									<a href="<?= base_url() ?>kabag/penilaian">
-										<button class="btn btn-block btn-secondary pull-right" type="button">Cancel</button>
+										<button class="btn btn-block btn-secondary pull-right" type="button">Batal</button>
 									</a>
 								</div>
 								<div class="col-md-6">

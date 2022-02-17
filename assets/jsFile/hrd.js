@@ -5,6 +5,64 @@ var obj = {
 	},
 	addListener: function addListener() {
 		var _this = this;
+		// var idActive = $("#departemen-select").val();
+		// $("#add-new-criteria-"+idActive).click(function() {
+		// 	var lastLength = $("#kriteria-length-"+idActive).val();
+		// 	var nowLength = parseInt(lastLength) + 1;
+
+		// 	$("#kriteria-length-"+idActive).val(nowLength);
+
+		// 	var divContainer = $("#div-kriteria-new-"+idActive);
+
+		// 	var divParent = document.createElement('div');
+		// 	divParent.id = "kriteria"+nowLength+"-"+idActive;
+		// 	divParent.classList = 'col-md-12 row';
+
+		// 	var divName = document.createElement('div');
+		// 	divName.classList.add('col-md-9');
+		// 	var divNameForm = document.createElement('div');
+		// 	divNameForm.classList.add('form-group');
+		// 	divNameForm.classList.add('text-center');
+		// 	var inputTextName = document.createElement('input');
+		// 	inputTextName.classList.add('form-control');
+		// 	inputTextName.type = "text";
+		// 	inputTextName.name = "criteria_new_name"+nowLength;
+		// 	inputTextName.required = true;
+		// 	divNameForm.append(inputTextName);
+		// 	divName.append(divNameForm);
+
+		// 	var divBobot = document.createElement('div');
+		// 	divBobot.classList.add('col-md-2');
+		// 	var divBobotForm = document.createElement('div');
+		// 	divBobotForm.classList.add('form-group');
+		// 	divBobotForm.classList.add('text-center');
+		// 	var inputTextBobot = document.createElement('input');
+		// 	inputTextBobot.classList.add('form-control');
+		// 	inputTextBobot.type = "number";
+		// 	inputTextBobot.name = "criteria_new_rating"+nowLength;
+		// 	inputTextBobot.id = "criteria_new_rating"+nowLength+"-"+idActive;
+		// 	inputTextBobot.required = true;
+		// 	divBobotForm.append(inputTextBobot);
+		// 	divBobot.append(divBobotForm);
+
+		// 	var divClose = document.createElement('div');
+		// 	divClose.classList.add('col-md-1');
+		// 	divClose.classList.add('pt-2');
+		// 	var btnClose = document.createElement('button');
+		// 	btnClose.classList.add("close");
+		// 	btnClose.type = "button";
+		// 	btnClose.setAttribute('onclick', "deleteKriteria('kriteria"+nowLength+"')")
+		// 	btnClose.textContent = "x";
+		// 	divClose.append(btnClose);
+
+		// 	// divParent.append(divNo);
+		// 	divParent.append(divName);
+		// 	divParent.append(divBobot);
+		// 	divParent.append(divClose);
+
+		// 	divContainer.append(divParent);
+
+		// });
 		$("#get-riwayat").click(function () {
 			var department = $("#department-id").val();
 			var employee = $("#employee-id").val();
@@ -250,12 +308,14 @@ var obj = {
 		
 		var divInfo = document.createElement('div');
 		divInfo.classList.add('collapse');
+		divInfo.classList.add('show');
 		divInfo.setAttribute('id', 'info');
 		var divCardBody = document.createElement('div');
 		divCardBody.classList.add('card-body');
 		var h4 = document.createElement('h4');
 		h4.innerHTML = 'Kriteria Penilaian';
 		divCardBody.append(h4);
+		
 		dataDept.forEach((el, idx) => {
 			var divSpan = document.createElement('div');
 			var span = document.createElement('span');
@@ -383,6 +443,7 @@ var obj = {
 
 		var divInfo = document.createElement('div');
 		divInfo.classList.add('collapse');
+		divInfo.classList.add('show');
 		divInfo.setAttribute('id', 'info');
 		var divCardBody = document.createElement('div');
 		divCardBody.classList.add('card-body');
@@ -758,4 +819,126 @@ function checkUserTypeEdit() {
 	} else {
 		$("#departemen-select-edit").hide();
 	}
+}
+
+function showCriteria(dataDept, ) {
+	console.log(dataDept);
+	var ids = dataDept.split(',');
+	
+	ids.forEach(e => {
+		var displayStatus = document.getElementById("div-"+e).style.display;
+		if(displayStatus == '' || displayStatus == 'block') {
+			document.getElementById("div-"+e).style.display = 'none';
+		}
+	});
+
+	var deptSelected = $("#departemen-select").val();
+	document.getElementById("div-"+deptSelected).style.display = '';
+}
+
+function addNewCriteria() {
+	var idActive = $("#departemen-select").val();
+
+	var lastLength = $("#kriteria-length-"+idActive).val();
+	var nowLength = parseInt(lastLength) + 1;
+
+	$("#kriteria-length-"+idActive).val(nowLength);
+
+	var divContainer = $("#div-kriteria-new-"+idActive);
+
+	var divParent = document.createElement('div');
+	divParent.id = "kriteria"+nowLength+"-"+idActive;
+	divParent.classList = 'col-md-12 row';
+
+	var divName = document.createElement('div');
+	divName.classList.add('col-md-9');
+	var divNameForm = document.createElement('div');
+	divNameForm.classList.add('form-group');
+	divNameForm.classList.add('text-center');
+	var inputTextName = document.createElement('input');
+	inputTextName.classList.add('form-control');
+	inputTextName.type = "text";
+	inputTextName.name = "criteria_new_name"+nowLength;
+	inputTextName.required = true;
+	divNameForm.append(inputTextName);
+	divName.append(divNameForm);
+
+	var divBobot = document.createElement('div');
+	divBobot.classList.add('col-md-2');
+	var divBobotForm = document.createElement('div');
+	divBobotForm.classList.add('form-group');
+	divBobotForm.classList.add('text-center');
+	var inputTextBobot = document.createElement('input');
+	inputTextBobot.classList.add('form-control');
+	inputTextBobot.type = "number";
+	inputTextBobot.name = "criteria_new_rating"+nowLength;
+	inputTextBobot.id = "criteria_new_rating"+nowLength+"-"+idActive;
+	inputTextBobot.required = true;
+	divBobotForm.append(inputTextBobot);
+	divBobot.append(divBobotForm);
+
+	var divClose = document.createElement('div');
+	divClose.classList.add('col-md-1');
+	divClose.classList.add('pt-2');
+	var btnClose = document.createElement('button');
+	btnClose.classList.add("close");
+	btnClose.type = "button";
+	btnClose.setAttribute('onclick', "deleteKriteria('kriteria"+nowLength+"')")
+	btnClose.textContent = "x";
+	divClose.append(btnClose);
+
+	// divParent.append(divNo);
+	divParent.append(divName);
+	divParent.append(divBobot);
+	divParent.append(divClose);
+
+	divContainer.append(divParent);
+}
+
+function buttonEditKriteria() {
+	var idActive = $("#departemen-select").val();
+
+	var lengthKritria = parseInt($("#kriteria-length-edit-"+idActive).text());
+	var jmlBobot = 0;
+	for (let i = 0; i < lengthKritria; i++) {
+		jmlBobot += parseInt($("#criteria_rating"+i+"-"+idActive).val());
+		console.log(jmlBobot);
+	}
+
+	if(jmlBobot > 100) {
+		alert("Jumlah nilai bobot tidak boleh lebih dari 100");
+		return;
+	}
+
+	$("#submit-edit-kriteria-"+idActive).click();
+}
+
+function buttonNewKriteria() {
+	var idActive = $("#departemen-select").val();
+
+	var lengthKritria = parseInt($("#kriteria-length-"+idActive).val());
+	var jmlBobot = 0;
+	for (let i = 1; i <= lengthKritria; i++) {
+		if($("#criteria_new_rating"+i+"-"+idActive).length != 0) {
+			jmlBobot += parseInt($("#criteria_new_rating"+i+"-"+idActive).val());
+		}
+	}
+
+	if(jmlBobot > 100) {
+		alert("Jumlah nilai bobot tidak boleh lebih dari 100");
+		return;
+	}
+
+	$("#submit-new-kriteria-"+idActive).click();
+}
+
+function deleteKriteria(idDiv) {
+	var idActive = $("#departemen-select").val();
+
+	$("#"+idDiv+"-"+idActive).remove();
+}
+
+function editKriteria(id, name) {
+	$("#id-kriteria-edit").val(id);
+	$("#kriteria-name").val(name);
 }

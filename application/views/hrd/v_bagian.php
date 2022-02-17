@@ -10,7 +10,7 @@
 		<div class="menu-block customscroll">
 			<div class="sidebar-menu">
 				<ul id="accordion-menu">
-					<li>
+				<li>
 						<a href="<?= base_url() ?>hrd" class="dropdown-toggle no-arrow">
 							<i class="micon icon-copy fa fa-dashboard" aria-hidden="true"></i><span class="mtext">Dashboard</span>
 						</a>
@@ -23,6 +23,11 @@
 					<li>
 						<a href="<?= base_url() ?>hrd/bagian" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-diagram"></span><span class="mtext">Data Bagian</span>
+						</a>
+					</li>
+					<li>
+						<a href="<?= base_url() ?>hrd/kriteria" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-edit2"></span><span class="mtext">Kriteria Penilaian</span>
 						</a>
 					</li>
 					<li>
@@ -83,9 +88,9 @@
 						<thead>
 							<tr>
 								<th scope="col">No</th>
-								<th scope="col">Name</th>
+								<th scope="col">Nama</th>
 								<!-- <th scope="col">Bagian</th> -->
-								<th scope="col" width="25%">Action</th>
+								<th scope="col" width="25%">Aksi</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -130,7 +135,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-light" type="button">Cancel</button>
+						<button class="btn btn-light" type="button">Batal</button>
 						<button class="btn btn-primary" type="submit">Tambah</button>
 					</div>
 				</form>
@@ -154,8 +159,8 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-light" type="button">Cancel</button>
-						<button class="btn btn-primary" type="submit">Update</button>
+						<button class="btn btn-light" type="button">Batal</button>
+						<button class="btn btn-primary" type="submit">Perbarui</button>
 					</div>
 				</form>
 			</div>
@@ -182,8 +187,8 @@
 				<div class="modal-body text-center">
 					<form action="<?= base_url() ?>hrd/deleteBagian" method="post">
 						<input type="hidden" name="bagian_id" id="id-bagian-delete">
-						<h3 class="mb-15"><i class="fa fa-exclamation-triangle"></i> Delete Bagian</h3>
-						<p>Are you sure want to delete bagian ?</p>
+						<h3 class="mb-15"><i class="fa fa-exclamation-triangle"></i> Hapus Bagian</h3>
+						<p>Anda yakin untuk menghapus bagian ?</p>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
 						<button type="submit" class="btn btn-primary">Yes</button>
 				</div>

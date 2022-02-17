@@ -16,11 +16,11 @@
 							<!-- <span class="micon dw dw-house-1"></span><span class="mtext">Dashboard</span> -->
 						</a>
 					</li>
-					<li>
-						<a href="<?= base_url() ?>kabag/kriteria" class="dropdown-toggle no-arrow">
+					<!-- <li>
+						<a href="<?php //echo base_url() ?>kabag/kriteria" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-edit2"></span><span class="mtext">Kriteria Penilaian</span>
 						</a>
-					</li>
+					</li> -->
 					<li>
 						<a href="<?= base_url() ?>kabag/penilaian" class="dropdown-toggle no-arrow">
 							<span class="micon dw dw-house-1"></span><span class="mtext">Penilaian Kinerja</span>

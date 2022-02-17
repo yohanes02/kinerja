@@ -63,14 +63,14 @@
 						</div>
 						<div class="col-md-2">
 							<div class="form-group">
-								<label for="">Dari Bulan</label>
-								<input class="form-control month-picker" placeholder="Select Month" type="text" id="month-rating-start">
+								<label for="">Dari Bulan Tahun</label>
+								<input class="form-control month-picker" placeholder="Pilih Bulan Tahun" type="text" id="month-rating-start">
 							</div>
 						</div>
 						<div class="col-md-2">
 							<div class="form-group">
-								<label for="">Ke Bulan</label>
-								<input class="form-control month-picker" placeholder="Select Month" type="text" id="month-rating-end">
+								<label for="">Ke Bulan Tahun</label>
+								<input class="form-control month-picker" placeholder="Pilih Bulan Tahun" type="text" id="month-rating-end">
 							</div>
 						</div>
 						<div class="col-md-12">

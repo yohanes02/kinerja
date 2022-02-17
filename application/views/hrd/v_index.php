@@ -26,6 +26,11 @@
 						</a>
 					</li>
 					<li>
+						<a href="<?= base_url() ?>hrd/kriteria" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-edit2"></span><span class="mtext">Kriteria Penilaian</span>
+						</a>
+					</li>
+					<li>
 						<a href="<?= base_url() ?>hrd/user" class="dropdown-toggle no-arrow">
 							<i class="micon icon-copy dw dw-user1"></i><span class="mtext">User</span>
 						</a>

@@ -21,11 +21,11 @@
 						<span class="micon dw dw-edit2"></span><span class="mtext">Kriteria Penilaian</span>
 					</a>
 				</li>
-				<li>
-					<a href="<?= base_url() ?>kabag/penilaian" class="dropdown-toggle no-arrow">
+				<!-- <li>
+					<a href="<?php //echo base_url() ?>kabag/penilaian" class="dropdown-toggle no-arrow">
 						<span class="micon dw dw-house-1"></span><span class="mtext">Penilaian Kinerja</span>
 					</a>
-				</li>
+				</li> -->
 				<li>
 					<a href="<?= base_url() ?>kabag/riwayat" class="dropdown-toggle no-arrow">
 						<i class="micon icon-copy fa fa-history" aria-hidden="true"></i><span class="mtext">Riwayat Penilaian</span>
@@ -111,7 +111,7 @@
 							<th scope="col">No</th>
 							<th scope="col">Nama Karyawan</th>
 							<th scope="col">Hasil Penilaian</th>
-							<th scope="col" width="25%">Action</th>
+							<th scope="col" width="25%">Aksi</th>
 						</tr>
 					</thead>
 					<tbody>

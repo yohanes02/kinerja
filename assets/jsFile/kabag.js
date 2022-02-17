@@ -343,7 +343,7 @@ var obj = {
 								tr.append(th1);
 							})
 							var th2 = document.createElement('th');
-							th2.innerHTML = 'Result';
+							th2.innerHTML = 'Hasil';
 							tr.append(th2);
 							thead.append(tr);
 							tableParent.append(thead);

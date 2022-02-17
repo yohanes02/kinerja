@@ -71,7 +71,7 @@
 											use code for form submit
 											<input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
 										-->
-										<button type="submit" class="btn btn-primary btn-lg btn-block">Sign In</button>
+										<button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
 									</div>
 									<!-- <div class="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR</div>
 									<div class="input-group mb-0">

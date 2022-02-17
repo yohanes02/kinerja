@@ -26,6 +26,11 @@
 						</a>
 					</li>
 					<li>
+						<a href="<?= base_url() ?>hrd/kriteria" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-edit2"></span><span class="mtext">Kriteria Penilaian</span>
+						</a>
+					</li>
+					<li>
 						<a href="<?= base_url() ?>hrd/user" class="dropdown-toggle no-arrow">
 							<i class="micon icon-copy dw dw-user1"></i><span class="mtext">User</span>
 						</a>
@@ -91,7 +96,7 @@
 								<th scope="col">Email</th>
 								<th scope="col">Username</th>
 								<th scope="col">Tipe User</th>
-								<th scope="col" width="40%">Action</th>
+								<th scope="col" width="40%">Aksi</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -176,7 +181,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
 						<button class="btn btn-primary" type="submit">Tambah</button>
 					</div>
 				</form>
@@ -220,8 +225,8 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-						<button class="btn btn-primary" type="submit">Update</button>
+						<button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+						<button class="btn btn-primary" type="submit">Perbarui</button>
 					</div>
 				</form>
 			</div>
@@ -248,7 +253,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-secondary" type="button" data-dismiss="modal" aria-hidden="true">Cancel</button>
+						<button class="btn btn-secondary" type="button" data-dismiss="modal" aria-hidden="true">Batal</button>
 						<button class="btn btn-primary" type="submit">Ganti Password</button>
 					</div>
 				</form>
@@ -262,8 +267,8 @@
 				<div class="modal-body text-center">
 					<form action="<?= base_url() ?>hrd/deleteUser" method="post">
 						<input type="hidden" name="user_id" id="id-user-delete">
-						<h3 class="mb-15"><i class="fa fa-exclamation-triangle"></i> Delete User</h3>
-						<p>Are you sure want to delete user ?</p>
+						<h3 class="mb-15"><i class="fa fa-exclamation-triangle"></i> Hapus User</h3>
+						<p>Anda yakin untuk menghapus user ?</p>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
 						<button type="submit" class="btn btn-primary">Yes</button>
 				</div>

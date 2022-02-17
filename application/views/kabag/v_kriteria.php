@@ -21,11 +21,11 @@
 						<span class="micon dw dw-edit2"></span><span class="mtext">Kriteria Penilaian</span>
 					</a>
 				</li>
-				<li>
-					<a href="<?= base_url() ?>kabag/penilaian" class="dropdown-toggle no-arrow">
+				<!-- <li>
+					<a href="<?php //echo base_url() ?>kabag/penilaian" class="dropdown-toggle no-arrow">
 						<span class="micon dw dw-house-1"></span><span class="mtext">Penilaian Kinerja</span>
 					</a>
-				</li>
+				</li> -->
 				<li>
 					<a href="<?= base_url() ?>kabag/riwayat" class="dropdown-toggle no-arrow">
 						<i class="micon icon-copy fa fa-history" aria-hidden="true"></i><span class="mtext">Riwayat Penilaian</span>
@@ -106,7 +106,7 @@
 							<div class="row">
 								<div class="col-md-6">
 									<a href="#parent-add" rel="content-y" data-toggle="collapse">
-										<button class="btn btn-block btn-secondary pull-right" type="button">Cancel</button>
+										<button class="btn btn-block btn-secondary pull-right" type="button">Batal</button>
 									</a>
 								</div>
 								<div class="col-md-6">
@@ -165,7 +165,7 @@
 							<div class="row">
 								<div class="col-md-6">
 									<a href="#parent-new" rel="content-y" data-toggle="collapse">
-										<button class="btn btn-block btn-secondary pull-right" type="button">Cancel</button>
+										<button class="btn btn-block btn-secondary pull-right" type="button">Batal</button>
 									</a>
 								</div>
 								<div class="col-md-6">
@@ -201,7 +201,7 @@
 							<th scope="col">No</th>
 							<th scope="col">Nama</th>
 							<th scope="col">Bobot</th>
-							<th scope="col" width="35%">Action</th>
+							<th scope="col" width="35%">Aksi</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -261,8 +261,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-light" type="button">Cancel</button>
-					<button class="btn btn-primary" type="submit">Update</button>
+					<button class="btn btn-light" type="button">Batal</button>
+					<button class="btn btn-primary" type="submit">Perbarui</button>
 				</div>
 			</form>
 		</div>

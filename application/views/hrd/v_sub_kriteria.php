@@ -11,25 +11,33 @@
 		<div class="sidebar-menu">
 			<ul id="accordion-menu">
 				<li>
-					<a href="<?= base_url() ?>kabag" class="dropdown-toggle no-arrow">
+					<a href="<?= base_url() ?>hrd" class="dropdown-toggle no-arrow">
 						<i class="micon icon-copy fa fa-dashboard" aria-hidden="true"></i><span class="mtext">Dashboard</span>
-						<!-- <span class="micon dw dw-house-1"></span><span class="mtext">Dashboard</span> -->
 					</a>
 				</li>
 				<li>
-					<a href="<?= base_url() ?>kabag/kriteria" class="dropdown-toggle no-arrow">
+					<a href="<?= base_url() ?>hrd/karyawan" class="dropdown-toggle no-arrow">
+						<span class="micon dw dw-user1"></span><span class="mtext">Data Karyawan</span>
+					</a>
+				</li>
+				<li>
+					<a href="<?= base_url() ?>hrd/bagian" class="dropdown-toggle no-arrow">
+						<span class="micon dw dw-diagram"></span><span class="mtext">Data Bagian</span>
+					</a>
+				</li>
+				<li>
+					<a href="<?= base_url() ?>hrd/kriteria" class="dropdown-toggle no-arrow">
 						<span class="micon dw dw-edit2"></span><span class="mtext">Kriteria Penilaian</span>
 					</a>
 				</li>
-				<!-- <li>
-					<a href="<?php //echo base_url() ?>kabag/penilaian" class="dropdown-toggle no-arrow">
-						<span class="micon dw dw-house-1"></span><span class="mtext">Penilaian Kinerja</span>
-					</a>
-				</li> -->
 				<li>
-					<a href="<?= base_url() ?>kabag/riwayat" class="dropdown-toggle no-arrow">
-						<i class="micon icon-copy fa fa-history" aria-hidden="true"></i><span class="mtext">Riwayat Penilaian</span>
-						<!-- <span class="micon dw dw-house-1"></span><span class="mtext">Riwayat Penilaian</span> -->
+					<a href="<?= base_url() ?>hrd/user" class="dropdown-toggle no-arrow">
+						<i class="micon icon-copy dw dw-user1"></i><span class="mtext">User</span>
+					</a>
+				</li>
+				<li>
+					<a href="<?= base_url() ?>hrd/kinerja" class="dropdown-toggle no-arrow">
+						<i class="micon icon-copy dw dw-file"></i><span class="mtext">Kinerja Karyawan</span>
 					</a>
 				</li>
 			</ul>
@@ -46,7 +54,7 @@
 						<h4>Sub Kriteria Penilaian</h4>
 					</div>
 					<div class="col-md-3">
-						<a href="<?= base_url() ?>kabag/kriteria">
+						<a href="<?= base_url() ?>hrd/kriteria">
 							<button type="button" class="close pull-right" id="close-add">×</button>
 						</a>
 					</div>
@@ -82,7 +90,7 @@
 						<div class="col-md-6 offset-6">
 							<div class="row">
 								<div class="col-md-6">
-									<a href="<?= base_url() ?>kabag/kriteria">
+									<a href="<?= base_url() ?>hrd/kriteria">
 										<button class="btn btn-block btn-secondary pull-right" type="button">Cancel</button>
 									</a>
 								</div>
@@ -138,7 +146,7 @@
 						<div class="col-md-6 offset-6">
 							<div class="row">
 								<div class="col-md-6">
-									<a href="<?= base_url() ?>kabag/kriteria">
+									<a href="<?= base_url() ?>hrd/kriteria">
 										<button class="btn btn-block btn-secondary pull-right" type="button">Batal</button>
 									</a>
 								</div>

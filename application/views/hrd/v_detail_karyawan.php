@@ -26,6 +26,11 @@
 						</a>
 					</li>
 					<li>
+						<a href="<?= base_url() ?>hrd/kriteria" class="dropdown-toggle no-arrow">
+							<span class="micon dw dw-edit2"></span><span class="mtext">Kriteria Penilaian</span>
+						</a>
+					</li>
+					<li>
 						<a href="<?= base_url() ?>hrd/user" class="dropdown-toggle no-arrow">
 							<i class="micon icon-copy dw dw-user1"></i><span class="mtext">User</span>
 						</a>
@@ -61,25 +66,25 @@
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="">First Name</label>
+									<label for="">Nama Awal</label>
 									<input type="text" class="form-control" name="first_name" value="<?= $detail['first_name'] ?>">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="">Last Name</label>
+									<label for="">Nama Akhir</label>
 									<input type="text" class="form-control" name="last_name" value="<?= $detail['last_name'] ?>">
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<label for="">Birth Place</label>
+									<label for="">Tempat Lahir</label>
 									<input type="text" class="form-control" name="birth_place" value="<?= $detail['birth_place'] ?>">
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<label for="">Birth Date</label>
+									<label for="">Tanggal Lahir</label>
 									<input type="text" class="form-control date-picker" name="birth_date" value="<?= $detail['birth_date'] ?>">
 								</div>
 							</div>
@@ -94,7 +99,7 @@
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<label for="">Department</label>
+									<label for="">Departemen</label>
 									<select name="department" id="" class="form-control custom-select">
 										<?php foreach ($departments as $department) : ?>
 											<option value="<?= $department['id'] ?>" <?php if($department['id'] == $detail['departemen_id']) {echo "selected";}  ?> ><?= $department['name'] ?></option>
@@ -104,26 +109,26 @@
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<label for="">Fee</label>
+									<label for="">Gaji</label>
 									<input type="text" class="form-control" name="fee" value="<?= $detail['fee'] ?>">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="">Join Date</label>
+									<label for="">Tanggal Bergabung</label>
 									<input type="text" class="form-control date-picker" name="join_date" value="<?= $detail['join_date'] ?>">
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
-									<label for="">Address</label>
+									<label for="">Alamat</label>
 									<textarea class="form-control" name="address" id="address" cols="30" rows="10"><?= $detail['address'] ?></textarea>
 								</div>
 							</div>
 							<div class="col-md-6 offset-6">
 								<div class="row">
 									<div class="col-md-6 offset-6">
-										<button class="btn btn-block btn-success pull-right" type="submit">Update Data</button>
+										<button class="btn btn-block btn-success pull-right" type="submit">Perbarui Data</button>
 									</div>
 								</div>
 							</div>
@@ -139,8 +144,8 @@
 				<div class="modal-body text-center">
 					<form action="<?= base_url() ?>hrd/deleteKaryawan" method="post">
 						<input type="hidden" name="karyawan_id" id="id-karyawan-delete">
-						<h3 class="mb-15"><i class="fa fa-exclamation-triangle"></i> Delete Data Karyawan</h3>
-						<p>Are you sure want to delete data karyawan ?</p>
+						<h3 class="mb-15"><i class="fa fa-exclamation-triangle"></i> Hapus Data Karyawan</h3>
+						<p>Anda yakin untuk menghapus data karyawan ?</p>
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
 						<button type="submit" class="btn btn-primary">Yes</button>
 				</div>
