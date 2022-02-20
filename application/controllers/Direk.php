@@ -154,7 +154,7 @@ class Direk extends CI_Controller {
 						$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month, $year)->result_array();
 						$aa = array();
 						for ($j=0; $j < count($rating); $j++) { 
-							$b = array($rating[$j]['criteria_id'], $rating[$j]['name'], $rating[$j]['weight']);
+							$b = array($rating[$j]['criteria_id'], $rating[$j]['name'], $rating[$j]['weight'], $rating[$j]['cname']);
 							array_push($aa, $b);
 						}
 						$a['cr'] = $aa;
@@ -249,7 +249,7 @@ class Direk extends CI_Controller {
 					$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month, $year)->result_array();
 					$aa = array();
 					for ($j=0; $j < count($rating); $j++) { 
-						$b = array($rating[$j]['criteria_id'], $rating[$j]['name'], $rating[$j]['weight']);
+						$b = array($rating[$j]['criteria_id'], $rating[$j]['name'], $rating[$j]['weight'], $rating[$j]['cname']);
 						array_push($aa, $b);
 					}
 					$a['cr'] = $aa;

@@ -339,6 +339,9 @@ var obj = {
 						if(e.length != 0) {
 							e[0].cr.forEach((f, idx) => {
 								var th1 = document.createElement('th');
+								th1.setAttribute('data-toggle', 'tooltip');
+								th1.setAttribute('data-placement', 'top');
+								th1.title = e[0]['cr'][idx][3];
 								th1.innerHTML = 'K'+(idx+1);
 								tr.append(th1);
 							})

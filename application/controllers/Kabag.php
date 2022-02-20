@@ -90,6 +90,8 @@ class Kabag extends CI_Controller
 			if($criterias_id == []) {
 				$criterias_id = [-1];
 			}
+			// $month = 12;
+			// $year = 2021;
 			$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month, $year)->result_array();
 			$employee_data[$i]['count_rating'] = count($rating);
 
@@ -147,6 +149,8 @@ class Kabag extends CI_Controller
 		if($criterias_id == []) {
 			$criterias_id = [-1];
 		}
+		// $month = 12;
+		// $year = 2021;
 		$rating = $this->Kabag_m->getPenilaian($employee_id, $criterias_id, $month, $year)->result_array();
 
 		$data['criteria_data'] = $criterias;
@@ -226,7 +230,7 @@ class Kabag extends CI_Controller
 					$rating = $this->Kabag_m->getPenilaian($employee_data[$i]['id'], $criterias_id, $month, $year)->result_array();
 					$aa = array();
 					for ($j=0; $j < count($rating); $j++) { 
-						$b = array($rating[$j]['criteria_id'], $rating[$j]['name'], $rating[$j]['weight']);
+						$b = array($rating[$j]['criteria_id'], $rating[$j]['name'], $rating[$j]['weight'], $rating[$j]['cname']);
 						array_push($aa, $b);
 					}
 					$a['cr'] = $aa;
@@ -478,6 +482,8 @@ class Kabag extends CI_Controller
 		$employee_id = $this->Core_m->getById($id, 'rating')->row_array();
 		$employee_id = $employee_id['karyawan_id'];
 
+		// $month = 12;
+		// $year = 2021;
 		$rating = $this->Kabag_m->getPenilaian($employee_id, $criterias_id, $month, $year)->result_array();
 
 		$result = $this->vikorCalculation($rating);

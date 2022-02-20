@@ -62,7 +62,7 @@
 			</div>
 			<div>
 				<?php if($sub_criteria_data == []) : ?>
-				<form action="<?= base_url() ?>kabag/insert_sub_criteria" method="post">
+				<form action="<?= base_url() ?>hrd/insert_sub_criteria" method="post">
 					<div class="row">
 						<div class="col-md-12 row">
 							<div class="col-md-1">
@@ -103,7 +103,7 @@
 					</div>
 				</form>
 				<?php else: ?>
-				<form action="<?= base_url() ?>kabag/update_sub_criteria" method="post">
+				<form action="<?= base_url() ?>hrd/update_sub_criteria" method="post">
 					<input type="hidden" name="sub_kriteria_length_edit" id="sub-kriteria-length-edit" style="display: none;" value="<?= count($sub_criteria_data) ?>">
 					<input type="hidden" name="criteria_parent" id="criteria-parent" style="display: none;" value="<?= $criteria_id ?>">
 					<div class="row">
