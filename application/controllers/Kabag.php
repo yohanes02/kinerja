@@ -442,7 +442,8 @@ class Kabag extends CI_Controller
 
 		$this->Core_m->insertData($ins, 'result_penilaian');
 
-		redirect($_SERVER['HTTP_REFERER']);
+		// redirect($_SERVER['HTTP_REFERER']);
+		redirect('kabag/penilaian');
 	}
 
 	public function update_penilaian()
@@ -504,7 +505,36 @@ class Kabag extends CI_Controller
 
 		$this->Core_m->updateData($id_result_penilaian, $data, 'result_penilaian');
 
-		redirect($_SERVER['HTTP_REFERER']);
+		// redirect($_SERVER['HTTP_REFERER']);
+		redirect('kabag/penilaian');
+	}
+
+	public function pekerjaan($id_karyawan)
+	{
+		$month = date('m') - 1;
+		$year = date('Y');
+
+		$data['employee'] = $this->Core_m->getById($id_karyawan, 'karyawan')->row_array();
+		$data['works'] = $this->Kabag_m->getPekerjaan($month, $year, $id_karyawan)->result_array();
+		$worksLength = count($data['works']);
+
+		$data['percentage'] = 0;
+		if(count($data['works']) > 0) {
+			$idx = 0;
+			for ($i=0; $i < count($data['works']); $i++) { 
+				if($data['works'][$i]['status'] == 3) {
+					$idx++;
+				}
+			}
+	
+			$data['percentage'] = ($idx/$worksLength) * 100;
+		}
+
+		$this->load->view('components/header');
+		$this->load->view('components/top_bar');
+		$this->load->view('kabag/v_pekerjaan', $data);
+		$this->load->view('components/footer');
+
 	}
 
 	private function vikorCalculation($data)

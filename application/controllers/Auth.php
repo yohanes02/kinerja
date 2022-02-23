@@ -22,18 +22,28 @@ class Auth extends CI_Controller {
 			redirect('kabag');
 		} elseif ($this->session->userdata('user_type') == 3) {
 			redirect('direk');
+		} elseif ($this->session->userdata('user_type') == 4) {
+			redirect('karyawan');
 		} else {
+			$jsFile['jsFile'] = 'login';
 			$this->load->view('components/header');
-			$this->load->view('v_login');
-			$this->load->view('components/footer');
+			$this->load->view('v_login_karyawan');
+			$this->load->view('components/footer', $jsFile);
 		}
 	}
 
-	public function login() {
-		$username = $this->input->post('username');
-		$password = $this->input->post('password');
-
-		$userData = $this->Auth_m->getUser($username, md5($password))->row_array();
+	public function login($type = null) {
+		if ($type == null) {
+			$username = $this->input->post('username');
+			$password = $this->input->post('password');
+	
+			$userData = $this->Auth_m->getUser($username, md5($password))->row_array();
+		} else {
+			$email = $this->input->post('email');
+			$password = $this->input->post('password');
+	
+			$userData = $this->Auth_m->getKaryawan($email, md5($password))->row_array();
+		}
 
 		if(empty($userData)) {
 			redirect('auth');
@@ -44,8 +54,22 @@ class Auth extends CI_Controller {
 			'user_type'	=> $userData['type']
 		);
 
+		if($type == 4) {
+			$userData['type'] = 4;
+			$dataSession = array(
+				'id'		=> $userData['id'],
+				'email'		=> $userData['email'],
+				'user_type'	=> $userData['type']
+			);
+		}
+
+
 		if($userData['type'] == 2) {
 			$dataSession['department_id'] = $userData['department_id'];
+		}
+
+		if ($userData['type'] == 4) {	
+			$dataSession['karyawan_id'] = $userData['id'];
 		}
 
 		$this->session->set_userdata($dataSession);
@@ -56,6 +80,8 @@ class Auth extends CI_Controller {
 			redirect('kabag');
 		} elseif ($this->session->userdata('user_type') == 3) {
 			redirect('direk');
+		} elseif ($this->session->userdata('user_type') == 4) {
+			redirect('karyawan');
 		}
 	}
 

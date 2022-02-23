@@ -333,6 +333,7 @@ var obj = {
 						var thead = document.createElement('thead');
 						var tr = document.createElement('tr');
 						var th = document.createElement('th');
+						th.style.verticalAlign = 'middle';
 						th.innerHTML = 'Nama Karyawan';
 						tr.append(th);
 						console.log(e);
@@ -341,12 +342,19 @@ var obj = {
 								var th1 = document.createElement('th');
 								th1.setAttribute('data-toggle', 'tooltip');
 								th1.setAttribute('data-placement', 'top');
+								th1.style.verticalAlign = 'middle';
 								th1.title = e[0]['cr'][idx][3];
-								th1.innerHTML = 'K'+(idx+1);
+								th1.innerHTML = e[0]['cr'][idx][3] + ' (K' + (idx+1) + ')';
+								// th1.innerHTML = 'K'+(idx+1);
 								tr.append(th1);
 							})
 							var th2 = document.createElement('th');
+							th2.style.verticalAlign = 'middle';
 							th2.innerHTML = 'Hasil';
+							var th3 = document.createElement('th');
+							th3.style.verticalAlign = 'middle';
+							th3.innerHTML = 'Indeks';
+							tr.append(th3);
 							tr.append(th2);
 							thead.append(tr);
 							tableParent.append(thead);
@@ -368,20 +376,24 @@ var obj = {
 								}					
 								var td2 = document.createElement('td');
 								var resultText;
-								if(1-e[idx].result >= 0.85) {
+								if(1-e[idx].result >= 0.80) {
 									resultText = 'Sangat Baik';
-								} else if(1-e[idx].result >= 0.70) {
+								} else if(1-e[idx].result >= 0.65) {
 									resultText = 'Baik';
-								} else if(1-e[idx].result >= 0.60) {
+								} else if(1-e[idx].result >= 0.50) {
 									resultText = 'Cukup';
-								} else if(1-e[idx].result < 0.60 && 1-e[idx].result >= 50) {
+								} else if(1-e[idx].result < 0.50 && 1-e[idx].result >= 40) {
 									resultText = 'Kurang';
 								} else {
 									resultText = 'Sangat Kurang';
 								}
-								td2.innerHTML = resultText + " (" + e[idx].result + ")";			
-								td2.style.fontWeight = 'bold';
+								// td2.innerHTML = resultText + " (" + e[idx].result + ")";			
 								// td2.innerHTML = e[idx].result;			
+								td2.innerHTML = resultText;			
+								td2.style.fontWeight = 'bold';
+								var td3 = document.createElement('td');
+								td3.innerHTML = e[idx].result;
+								tr1.append(td3);
 								tr1.append(td2);
 								tbody.append(tr1);
 							}

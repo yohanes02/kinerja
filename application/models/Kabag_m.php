@@ -32,6 +32,12 @@ class Kabag_m extends CI_Model
 		return $this->db->query($sql);
 	}
 
+	public function getPekerjaan($month, $year, $karyawanId) {
+		// echo $month . " - ".$year." - ".$karyawanId;die;
+		$this->db->where(["month" => $month, "year" => $year, "karyawan_id" => $karyawanId]);
+		return $this->db->get('work');
+	}
+
 	function getPenilaian($employee_id, $criterias_id, $month, $year) {
 		$criterias_id = join(',',$criterias_id);
 		// $sql = "SELECT r.*, c.weight, sc.weight, sc.name, c.weight as cweight from rating r left join criteria c on c.id = r.criteria_id left join sub_criteria sc on sc.id = r.sub_criteria_id where r.karyawan_id = $employee_id and r.criteria_id in ($criterias_id) and r.month = $month and r.year = $year";

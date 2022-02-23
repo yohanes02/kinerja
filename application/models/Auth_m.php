@@ -12,4 +12,10 @@ class Auth_m extends CI_Model
     $this->db->where(['username' => $username, 'password' => $pass]);
     return $this->db->get("user");
 	}
+
+  public function getKaryawan($email, $pass)
+	{
+    $this->db->where(['email' => $email, 'password' => $pass]);
+    return $this->db->get("karyawan");
+	}
 }

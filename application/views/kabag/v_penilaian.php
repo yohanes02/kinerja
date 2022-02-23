@@ -16,16 +16,16 @@
 						<!-- <span class="micon dw dw-house-1"></span><span class="mtext">Dashboard</span> -->
 					</a>
 				</li>
-				<li>
-					<a href="<?= base_url() ?>kabag/kriteria" class="dropdown-toggle no-arrow">
+				<!-- <li>
+					<a href="<?php //echo base_url() ?>kabag/kriteria" class="dropdown-toggle no-arrow">
 						<span class="micon dw dw-edit2"></span><span class="mtext">Kriteria Penilaian</span>
 					</a>
-				</li>
-				<!-- <li>
+				</li> -->
+				<li>
 					<a href="<?php //echo base_url() ?>kabag/penilaian" class="dropdown-toggle no-arrow">
 						<span class="micon dw dw-house-1"></span><span class="mtext">Penilaian Kinerja</span>
 					</a>
-				</li> -->
+				</li>
 				<li>
 					<a href="<?= base_url() ?>kabag/riwayat" class="dropdown-toggle no-arrow">
 						<i class="micon icon-copy fa fa-history" aria-hidden="true"></i><span class="mtext">Riwayat Penilaian</span>
@@ -110,7 +110,9 @@
 						<tr>
 							<th scope="col">No</th>
 							<th scope="col">Nama Karyawan</th>
+							<th scope="col">Indeks Penilaian</th>
 							<th scope="col">Hasil Penilaian</th>
+							<th scope="col">Data</th>
 							<th scope="col" width="25%">Aksi</th>
 						</tr>
 					</thead>
@@ -124,6 +126,32 @@
 									<?php if($employee['result'] != null) : ?>
 										<?= $employee['result'] ?>
 									<?php endif; ?>
+								</td>
+								<td>
+									<?php if($employee['result'] != null && is_numeric($employee['result'])) : ?>
+									<?php
+									if(1-$employee['result'] >= 0.80) {
+										echo 'Sangat Baik';
+									} else if(1-$employee['result'] >= 0.65) {
+										echo 'Baik';
+									} else if(1-$employee['result'] >= 0.50) {
+										echo 'Cukup';
+									} else if(1-$employee['result'] < 0.50 && 1-$employee['result'] >= 40) {
+										echo 'Kurang';
+									} else {
+										echo 'Sangat Kurang';
+									}
+									?>
+									<?php else : ?>
+									<?php echo '-'; ?>
+									<?php endif; ?>
+								</td>
+								<td>
+									<a href="<?= base_url() ?>kabag/pekerjaan/<?=$employee['id']?>" target="_blank">
+										<button class="btn btn-primary">
+											<i class="icon-copy fa fa-edit" aria-hidden="true"></i> Lihat Pekerjaan
+										</button>
+									</a>
 								</td>
 								<td>
 									<?php if ($employee['count_rating'] == $criteria_length) : ?>

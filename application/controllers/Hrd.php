@@ -258,10 +258,12 @@ class Hrd extends CI_Controller {
 		$joinDate = $post['join_date'];
 		$address = $post['address'];
 		$departmentId = $post['department'];
-
+		$email = $post['email'];
+		$password = date_format(date_create($birthDate), 'Ymd');
+		
 		$birthDate = date_format(date_create($birthDate), 'Y-m-d');
 		$joinDate = date_format(date_create($joinDate), 'Y-m-d');
-
+		
 		$ins = [
 			'first_name'	=> $firstName,
 			'last_name'	=> $lastName,
@@ -271,8 +273,11 @@ class Hrd extends CI_Controller {
 			'fee'			=> $fee,
 			'join_date'			=> $joinDate,
 			'address'			=> $address,
-			'departemen_id' => $departmentId
+			'departemen_id' => $departmentId,
+			'email'			=> $email,
+			'password'		=> $password
 		];
+
 
 		$checkFullName = $this->Hrd_m->checkFullName($firstName, $lastName)->result_array();
 
