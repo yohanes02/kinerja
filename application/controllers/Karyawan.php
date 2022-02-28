@@ -37,16 +37,32 @@ class Karyawan extends CI_Controller
 
     public function pekerjaan()
     {
-      $month = date('m');
-      $year = date('Y');
-      $karyawanId = $this->session->userdata('id');
-      $data['works'] = $this->Karyawan_m->getPekerjaan($month, $year, $karyawanId)->result_array();
+      $data['works'] = $this->getPekerjaan();
       
       $jsFile['jsFile'] = 'karyawan';
       $this->load->view('components/header');
       $this->load->view('components/top_bar');
       $this->load->view('karyawan/v_pekerjaan', $data);
       $this->load->view('components/footer', $jsFile);
+    }
+
+    public function getPekerjaan() {
+      $post = json_decode(file_get_contents('php://input'),true);
+      if($post != NULL) {
+        // print_r($post);die;
+        $month = $post['month'];
+        $year = $post['year'];
+        $karyawanId = $post['karyawan_id'];
+        $result = $this->Karyawan_m->getPekerjaan($month, $year, $karyawanId)->result_array();
+        echo json_encode($result);
+      } else {
+        $month = date('m');
+        $year = date('Y');
+        $karyawanId = $this->session->userdata('id');
+        return $this->Karyawan_m->getPekerjaan($month, $year, $karyawanId)->result_array();
+      }
+      // print_r($post);die;
+
     }
 
     public function insert_pekerjaan()

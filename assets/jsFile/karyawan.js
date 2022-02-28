@@ -20,7 +20,7 @@ function updateStatus(id, index) {
     // })
 }
 
-function lihatPekerjaan() {
+function lihatPekerjaan(karyawanId) {
     var date = $("#month-year-pekerjaan").val().split(" ");
     var dateVal = date[1] + '-' + getMonth(date[0]);
     var month = new Date(dateVal).getMonth() + 1;
@@ -33,10 +33,88 @@ function lihatPekerjaan() {
         $("#current-month").show();
         $("#past-month").hide();
     } else {
+        createTablePastMonth(month, year, karyawanId);
         $("#current-month").hide();
         $("#past-month").show();
         $("#p-past-month").text('Bulan: ' + $("#month-year-pekerjaan").val());
     }
+}
+
+function createTablePastMonth(month, year, karyawanId) {
+    var post = {
+        month: month,
+        year: year,
+        karyawan_id: karyawanId,
+    }
+
+    var dataPost = JSON.stringify(post);
+    $.ajax({
+        type: "post",
+        url: "getPekerjaan",
+        dataType: "JSON",
+        data: dataPost,
+        traditional: true,
+        success: function (data) {
+            // console.log(data);
+            $('#body-past-month').empty();
+            var parent = document.getElementById('body-past-month');
+            parent
+            
+            var idx = 0;
+            data.forEach(el => {
+                var tr = document.createElement('tr');
+                for (let i = 0; i < 3; i++) {
+                    var text = '';
+                    var bgColor = 'transparent';
+                    var width = '5%';
+                    if(i == 0) {
+                        text = idx+1;
+                    }
+                    if(i == 1) {
+                        text = el.description;
+                        width = '75%';
+                    }
+                    if(i == 2) {
+                        width = '20%';
+                        if (el.status == 1) {
+                            text = 'Menunggu Dikerjakan';                            
+                        } else if (el.status == 2) {
+                            text = 'Sedang Dikerjakan';
+                        } else {
+                            text = 'Selesai';
+                            bgColor = 'lightgreen';
+                        }
+                    }
+                    if (i == 2) {
+                        var td = document.createElement('td');
+                        // td.style.backgroundColor = bgColor;
+                        td.setAttribute("width", width);
+                        var select = document.createElement('select');
+                        select.classList.add('form-control');
+                        select.classList.add('custom-select');
+                        select.setAttribute('disabled', 'disabled');
+                        select.style.backgroundColor = bgColor;
+                        var option = document.createElement('option');
+                        option.setAttribute('selected', 'selected');
+                        option.innerHTML = text;
+                        select.append(option);
+                        td.append(select);
+                    } else {
+                        var td = document.createElement('td');
+                        td.style.backgroundColor = bgColor;
+                        td.setAttribute("width", width);
+                        td.innerHTML = text;
+                    }
+
+                    tr.append(td);
+                }
+                parent.append(tr);
+                idx++;
+            });
+        }
+    })
+
+    
 }
 
 function getMonth(month) {

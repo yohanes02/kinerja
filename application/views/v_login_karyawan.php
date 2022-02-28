@@ -39,7 +39,7 @@
 							</div>
 							<div class="row" style="padding-bottom: 10px;">
 								<div class="col-12">
-									<span id="to-karyawan" onclick="toKaryawan()" style="cursor: pointer;">Login sebagai karyawan</span>
+									<span id="to-karyawan" onclick="toKaryawan()" style="cursor: pointer; font-weight: bold;">Login sebagai karyawan</span>
 								</div>
 							</div>
 							<div class="row">
@@ -70,7 +70,7 @@
 							</div>
 							<div class="row" style="padding-bottom: 10px;">
 								<div class="col-12">
-									<span id="to-user" onclick="toUser()" style="cursor: pointer;">Login sebagai Hrd / Kabag / Direktur</span>
+									<span id="to-user" onclick="toUser()" style="cursor: pointer; font-weight: bold;">Login sebagai Hrd / Kabag / Direktur</span>
 								</div>
 							</div>
 							<div class="row">

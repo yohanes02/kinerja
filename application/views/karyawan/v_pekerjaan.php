@@ -37,7 +37,7 @@
                     <input class="form-control month-picker" placeholder="Pilih Bulan Tahun" type="text" id="month-year-pekerjaan" value="<?=date('F')?> <?=date('Y')?>">
                 </div>
                 <div class="col-md-3">
-                    <button type="button" class="btn btn-primary btn-block" id="button-pekerjaan" onclick="lihatPekerjaan()">Tampilkan</button>
+                    <button type="button" class="btn btn-primary btn-block" id="button-pekerjaan" onclick="lihatPekerjaan(<?=$this->session->userdata('karyawan_id')?>)">Tampilkan</button>
                 </div>
             </div>
         </div>
@@ -152,11 +152,11 @@
                         <h4>Daftar Pekerjaan</h4>
 						<p id="p-past-month">Bulan: </p>
                     </div>
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <a href="#parent-pekerjaan" rel="content-y" data-toggle="collapse">
                             <button class="btn btn-primary pull-right">Tambah Pekerjaan</button>
                         </a>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -165,30 +165,9 @@
                                 <th scope="col">No</th>
                                 <th scope="col">Pekerjaan</th>
                                 <th scope="col">Status</th>
-                                <th scope="col">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <?php $i = 1; foreach ($works as $work) :?>
-                                <tr>
-                                    <td width="5%"><?= $i ?></td>
-                                    <td><?= $work['description'] ?></td>
-                                    <td width="25%">
-                                        <select name="" id="status<?=$i?>" class="form-control custom-select" onchange="updateStatus(<?=$work['id']?>, <?=$i?>)">
-                                            <option value="1" <?php if($work['status']==1) echo 'selected' ?>>Menunggu Dikerjakan</option>
-                                            <option value="2" <?php if($work['status']==2) echo 'selected' ?>>Sedang Dikerjakan</option>
-                                            <option value="3" <?php if($work['status']==3) echo 'selected' ?>>Selesai</option>
-                                        </select>
-                                    </td>
-                                    <td width="10%">
-                                        <form action="<?= base_url() ?>karyawan/delete_pekerjaan" method="post">
-                                            <input type="hidden" name="id_pekerjaan" value="<?= $work['id'] ?>">
-                                            <button type="submit" class="btn btn-danger btn-block">Hapus</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php $i++; endforeach; ?>
-                        </tbody>
+                        <tbody id="body-past-month"></tbody>
                     </table>
                 </div>
             </div>
