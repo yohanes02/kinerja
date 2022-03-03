@@ -64,16 +64,22 @@
 					<form action="<?= base_url() ?>hrd/updateKaryawan" method="post">
 						<input type="hidden" name="karyawan_id" value="<?= $detail['id'] ?>">
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<div class="form-group">
 									<label for="">Nama Awal</label>
 									<input type="text" class="form-control" name="first_name" value="<?= $detail['first_name'] ?>">
 								</div>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-4">
 								<div class="form-group">
 									<label for="">Nama Akhir</label>
 									<input type="text" class="form-control" name="last_name" value="<?= $detail['last_name'] ?>">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="">Email</label>
+									<input type="text" class="form-control" name="email" value="<?= $detail['email'] ?>">
 								</div>
 							</div>
 							<div class="col-md-3">

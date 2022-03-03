@@ -6,18 +6,18 @@ function updateStatus(id, index) {
 
     console.log(post);
 
-    // var dataPost = JSON.stringify(post);
+    var dataPost = JSON.stringify(post);
 
-    // $.ajax({
-    //     type: "post",
-    //     url: "update_pekerjaan",
-    //     dataType: "JSON",
-    //     data: dataPost,
-    //     traditional: true,
-    //     success: function (date) {
-    //         console.log("DONE");
-    //     }
-    // })
+    $.ajax({
+        type: "post",
+        url: "update_pekerjaan",
+        dataType: "JSON",
+        data: dataPost,
+        traditional: true,
+        success: function (date) {
+            console.log("DONE");
+        }
+    });
 }
 
 function lihatPekerjaan(karyawanId) {

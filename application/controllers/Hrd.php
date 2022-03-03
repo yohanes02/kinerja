@@ -275,7 +275,7 @@ class Hrd extends CI_Controller {
 			'address'			=> $address,
 			'departemen_id' => $departmentId,
 			'email'			=> $email,
-			'password'		=> $password
+			'password'		=> md5($password)
 		];
 
 
@@ -297,6 +297,7 @@ class Hrd extends CI_Controller {
 		$employeeId = $post['karyawan_id'];
 		$firstName = $post['first_name'];
 		$lastName = $post['last_name'];
+		$email = $post['email'];
 		$birthPlace = $post['birth_place'];
 		$birthDate = $post['birth_date'];
 		$jk = $post['jenis_kelamin'];
@@ -304,6 +305,7 @@ class Hrd extends CI_Controller {
 		$joinDate = $post['join_date'];
 		$address = $post['address'];
 		$departmentId = $post['department'];
+		$password = date_format(date_create($birthDate), 'Ymd');
 
 		$birthDate = date_format(date_create($birthDate), 'Y-m-d');
 		$joinDate = date_format(date_create($joinDate), 'Y-m-d');
@@ -317,7 +319,9 @@ class Hrd extends CI_Controller {
 			'fee'			=> $fee,
 			'join_date'			=> $joinDate,
 			'address'			=> $address,
-			'departemen_id' => $departmentId
+			'departemen_id' => $departmentId,
+			'email'	=> $email,
+			'password' => md5($password)
 		];
 
 		$checkFullName = $this->Hrd_m->checkFullName($firstName, $lastName)->result_array();

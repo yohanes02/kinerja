@@ -77,15 +77,17 @@ class Karyawan extends CI_Controller
       ];
 
       $this->Core_m->insertData($ins, 'work');
+      $this->session->set_flashdata('insert_pekerjaan', 'Pekerjaan behasil ditambahkan');
       redirect('karyawan/pekerjaan');
     }
 
     public function update_pekerjaan()
     {
-      $post = $this->input->post();
-      $id = $post['id_pekerjaan'];
+  		$jsonData = json_decode(file_get_contents('php://input'),true);
+      // $post = $this->input->post();
+      $id = $jsonData['id_pekerjaan'];
       $data = [
-        'status'      => $post['status_pekerjaan']
+        'status'      => $jsonData['status_pekerjaan']
       ];
 
       $this->Core_m->updateData($id, $data, 'work');

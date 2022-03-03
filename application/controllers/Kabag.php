@@ -441,6 +441,7 @@ class Kabag extends CI_Controller
 		];
 
 		$this->Core_m->insertData($ins, 'result_penilaian');
+		$this->session->set_flashdata('insert_nilai', 'Penilaian Karyawan Berhasil');
 
 		// redirect($_SERVER['HTTP_REFERER']);
 		redirect('kabag/penilaian');

@@ -87,6 +87,11 @@
 				</form>
 			</div>
 		</div> -->
+		<?php if($this->session->flashdata('insert_nilai')) : ?>
+			<div class="alert alert-success">
+				<?php echo $this->session->flashdata('insert_nilai') ?>
+			</div>
+		<?php endif ?>
 		<div class="pd-20 card-box mb-30">
 			<div class="clearfix mb-20">
 				<!-- <div class="pull-left"> -->
@@ -130,13 +135,13 @@
 								<td>
 									<?php if($employee['result'] != null && is_numeric($employee['result'])) : ?>
 									<?php
-									if(1-$employee['result'] >= 0.80) {
+									if(1-$employee['result'] >= 0.80) { // <= 0.20
 										echo 'Sangat Baik';
-									} else if(1-$employee['result'] >= 0.65) {
+									} else if(1-$employee['result'] >= 0.65) { // > 0.20 && <= 0.35
 										echo 'Baik';
-									} else if(1-$employee['result'] >= 0.50) {
+									} else if(1-$employee['result'] >= 0.50) { // > 0.35 && <= 0.50
 										echo 'Cukup';
-									} else if(1-$employee['result'] < 0.50 && 1-$employee['result'] >= 40) {
+									} else if(1-$employee['result'] < 0.50 && 1-$employee['result'] >= 40) { // > 0.50 && <= 0.60  
 										echo 'Kurang';
 									} else {
 										echo 'Sangat Kurang';
